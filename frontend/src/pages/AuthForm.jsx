@@ -1,9 +1,9 @@
+import { useState } from "react"
 import { Outlet, Navigate } from "react-router-dom"
 
 export default function AuthForm (){
-  const isLoggedIn = false;
-
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   return (
     <>
         {isLoggedIn ? (
