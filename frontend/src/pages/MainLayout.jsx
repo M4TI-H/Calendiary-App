@@ -5,10 +5,10 @@ export default function MainLayout() {
   return (
     <div>
       <header>
-        <h1>Welcome to the Main Layout</h1>
+        <h1>Main Layout</h1>
       </header>
       <main>
-        <Outlet />  // To miejsce, gdzie pojawią się podkomponenty
+        <Outlet />
       </main>
     </div>
   );

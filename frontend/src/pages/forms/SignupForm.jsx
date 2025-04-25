@@ -7,39 +7,57 @@ import { useState } from 'react';
 export default function SignupForm () {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+    const [repeatedPassword, setRepeatedPassword] = useState("");
+
     return (
-      <Flex w="100vw" h="100vh" bg="#2A9D8F" flexDir="row" align="center" justify="center">
-        <VStack w="26vw" h="60vh" align="center" bg="#F8F9FA" borderRadius="20px" pt="2vh">
+      <Flex  w="100vw" h="100vh" flexDir="row" align="center" justify="center" bg="#2a9d8f" overflow="hidden"
+      bgImage={{ base: "none", md: "url('colorkit.png')" }}  bgRepeat="no-repeat" bgSize="cover" bgPosition="center" bgAttachment="fixed">
+        <VStack maxW="34rem" minW="28rem" maxH="36rem" minH="12rem" w={{ base: "50vw", sm: "auto" }} h="100%"
+        p={10} align="center" bg="#F8F9FA" borderRadius="xl" boxShadow="2xl" spacing={6}>
 
-            <Flex w="80%" h="8vh" flexDir="column" justify="space-between">
-              <Heading fontSize="5vh" color="#264653">Sign up</Heading>
-              <Text className="loginSub" fontSize="2vh" color="#495057">Please enter your account details</Text>
-            </Flex>
+          <Heading fontSize="4xl" fontWeight="bold" color="#2b2d42">Sign up</Heading>
+          <Text fontSize="md" fontWeight="semibold" color="#2b2d42">Please enter your account details</Text>
 
-            <Flex w="inherit" h="14vh" justify="center">
-              <FormControl>
-                <FormLabel color="#264653">Email address</FormLabel>
-                  <InputGroup h="40%">
-                    <Input className="loginInput" onChange={e => setLogin(e.target.value)} variant="unstyled" w="20vw" h="5vh" type="text" bg="#DEE2E6"/>
-                  </InputGroup>
-                <FormErrorMessage>There is an account using that email.</FormErrorMessage>
-              </FormControl>
-            </Flex>
-            
-            <Flex w="inherit" h="12vh" justify="center">
-              <FormControl>
-                <FormLabel color="#264653">Password</FormLabel>
-                  <InputGroup h="40%">
-                    <Input className="loginInput" onChange={e => setPassword(e.target.value)} variant="unstyled" w="20vw" h="5vh" type="password" bg="#DEE2E6"/>
-                  </InputGroup>
-                <FormErrorMessage>This password is not valid. Try again.</FormErrorMessage>
-              </FormControl>
-            </Flex>
-            <Button className="loginBtn" w="10vw" h="4vh" variant="unstyled" bg="#567CA2" color="#F8F9FA">Create account</Button>
-
-            <Button as={Link} to="/login">Login</Button>
-        </VStack>
+          <FormControl mt={16}>
+            <FormLabel color="#2b2d42">Email address</FormLabel>
+              <InputGroup>
+                <Input onChange={e => setLogin(e.target.value)} type="email" minW="20rem" maxW="24rem" 
+                  minH="2.5rem" maxH="3rem" w={{ base: "70vw", sm: "auto" }} h={{ base: "3rem", sm: "auto" }}
+                  bg="#DEE2E6" variant="filled" _hover={{ bg: "#CED4DA" }} _focus={{bg: "#CED4DA", borderColor: "#ADB5BD", borderWidth: "thin"}}/>
+              </InputGroup>
+            <FormErrorMessage>There is an account using that email.</FormErrorMessage>
+          </FormControl>
         
+          <FormControl mt={24}>
+            <FormLabel color="#2b2d42">Password</FormLabel>
+              <InputGroup>
+                <Input onChange={e => setPassword(e.target.value)} type="password" minW="20rem" maxW="24rem"
+                  minH="2.5rem" maxH="3rem" w={{ base: "70vw", sm: "auto" }} h={{ base: "3rem", sm: "auto" }}
+                  bg="#DEE2E6" variant="filled" _hover={{ bg: "#CED4DA" }} _focus={{bg: "#CED4DA", borderColor: "#ADB5BD", borderWidth: "thin"}}/>
+              </InputGroup>
+            <FormErrorMessage>This password is not valid. Try again.</FormErrorMessage>
+          </FormControl>
+
+          <FormControl mt={24}>
+            <FormLabel color="#2b2d42">Repeat password</FormLabel>
+              <InputGroup>
+                <Input onChange={e => setRepeatedPassword(e.target.value)}  type="password" minW="20rem" maxW="24rem"
+                  minH="2.5rem" maxH="3rem" w={{ base: "70vw", sm: "auto" }} h={{ base: "3rem", sm: "auto" }}
+                  bg="#DEE2E6" variant="filled" _hover={{ bg: "#CED4DA" }} _focus={{bg: "#CED4DA", borderColor: "#ADB5BD", borderWidth: "thin"}}/>
+              </InputGroup>
+            <FormErrorMessage>This password is not valid. Try again.</FormErrorMessage>
+          </FormControl>
+
+          <Button mt={2} fontSize="md" minW="10rem" maxW="14rem" minH="2em" maxH="3rem"
+            w={{ base: "30vw", sm: "auto" }} h={{ base: "5vh", sm: "4vh" }}
+            bg="#248277" color="#F8F9FA" _hover={{ bg: "#14746f" }}
+          >Create account</Button>
+
+          <Button as={Link} to="/login" mt="auto" fontSize="md" minW="6rem" maxW="8rem" minH="2rem" maxH="3rem"
+            w={{ base: "7rem", sm: "auto" }} h={{ base: "3rem", sm: "auto" }}
+            bg="#248277" color="#F8F9FA" _hover={{ bg: "#14746f" }}
+          >Login</Button>
+        </VStack>
       </Flex>
     );
 }
