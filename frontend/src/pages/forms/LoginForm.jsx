@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Heading, Input, Text, VStack, InputGroup, Button } from "@chakra-ui/react";
+import { Flex, Heading, Input, Text, VStack, InputGroup, Button, Image } from "@chakra-ui/react";
 import { FormControl, FormErrorMessage, FormLabel } from "@chakra-ui/form-control";
 import { Link } from "react-router-dom";
 import { useState } from 'react';
@@ -12,6 +12,9 @@ export default function LoginForm () {
     return (
       <Flex  w="100vw" h="100vh" flexDir="row" align="center" justify="center" bg="#2a9d8f" overflow="hidden"
       bgImage={{ base: "none", md: "url('colorkit.png')" }}  bgRepeat="no-repeat" bgSize="cover" bgPosition="center" bgAttachment="fixed">
+
+        <Image src="logo.png" pos="absolute" maxH="7rem" h={{ base: "10rem", sm: "auto" }} left="0" top="0"/>
+
         <VStack maxW="34rem" minW="28rem" maxH="32rem" minH="12rem" w={{ base: "50vw", sm: "auto" }} h="100%"
         p={10} align="center" bg="#F8F9FA" borderRadius="xl" boxShadow="2xl" spacing={6}>
 
