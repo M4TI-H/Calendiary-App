@@ -1,5 +1,5 @@
 import express from "express";
-import mysql from "mysql";
+import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 import cors from 'cors';
 import authRouter from "./routes/authQueries.js";
@@ -16,9 +16,11 @@ app.listen(PORT, () =>
     console.log(`Server is running on port ${PORT}`)
 );
 
-const db = mysql.createConnection({
+const db = await mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
     database: "calendiary"
 });
+
+export default db;
