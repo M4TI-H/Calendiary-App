@@ -51,7 +51,7 @@ router.post("/login",
       const [data] = await db.query("SELECT email, password FROM user WHERE email = ?", [email]);
 
       if (data.length === 0) {
-        return res.status(400).json({ status: "No user with that email." });
+        return res.status(400).json({ status: "No user with that email." }); 
       } else {
         const user = data[0];
         if (user.password === password) {

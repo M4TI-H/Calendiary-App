@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { Flex } from '@chakra-ui/react';
+import LogoutButton from './main/components/LogoutButton';
+import Sidebar from './main/components/Sidebar';
 
 export default function MainLayout() {
     const navigate = useNavigate();
@@ -15,13 +18,12 @@ export default function MainLayout() {
     }, []);
 
   return (
-    <div>
-      <header>
-        <h1>Main Layout</h1>
-      </header>
+    <Flex w="100vw" h="100vh" bg="#2a9d8f" overflowX="hidden"
+    bgImage={{ base: "none", md: "url('background.png')" }}  bgRepeat="no-repeat" bgSize="cover" bgPosition="center" bgAttachment="fixed">
+      <Sidebar />
       <main>
         <Outlet />
       </main>
-    </div>
+    </Flex>
   );
 }

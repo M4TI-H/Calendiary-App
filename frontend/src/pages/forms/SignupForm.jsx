@@ -48,7 +48,7 @@ export default function SignupForm () {
 
     return (
       <Flex  w="100vw" h="100vh" flexDir="row" align="center" justify="center" bg="#2a9d8f" overflow="hidden"
-      bgImage={{ base: "none", md: "url('colorkit.png')" }}  bgRepeat="no-repeat" bgSize="cover" bgPosition="center" bgAttachment="fixed">
+      bgImage={{ base: "none", md: "url('background.png')" }}  bgRepeat="no-repeat" bgSize="cover" bgPosition="center" bgAttachment="fixed">
 
         <Image src="logo.png" pos="absolute" maxH="7rem" h={{ base: "10rem", sm: "auto" }} left="0" top="0"/>
 
