@@ -1,8 +1,11 @@
 import { Router } from "express";
 import { validationResult, body } from "express-validator";
 import db from "../server.js";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 
 const router = Router();
+dotenv.config();
 
 router.post("/register", 
     body('email').isEmail().notEmpty(),
@@ -37,13 +40,13 @@ router.post("/login",
   body('password').isLength({ min: 6 }).notEmpty(),
   async (req, res) => {
     const result = validationResult(req);
-
     if (!result.isEmpty()) {
       return res.status(400).json({ status: "Log in validation errors", errors: result.array() });
     }
 
     const {email, password} = req.body;
 
+    const accessToken = jwt.sign({email: email}, process.env.ACCESS_TOKEN_SECRET);
     try{
       const [data] = await db.query("SELECT email, password FROM user WHERE email = ?", [email]);
 
@@ -52,7 +55,7 @@ router.post("/login",
       } else {
         const user = data[0];
         if (user.password === password) {
-          return res.status(200).send("User logged in successfully");
+          return res.status(200).send({status: "User logged in successfully.", user: accessToken});
         }
         else {
           return res.status(400).json({ status: "Incorrect password." });

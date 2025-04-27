@@ -52,43 +52,43 @@ export default function SignupForm () {
 
         <Image src="logo.png" pos="absolute" maxH="7rem" h={{ base: "10rem", sm: "auto" }} left="0" top="0"/>
 
-        <VStack maxW="34rem" minW="28rem" maxH="36rem" minH="12rem" w={{ base: "50vw", sm: "auto" }} h="100%"
+        <VStack maxW="34rem" minW="28rem" maxH="36rem" minH="32rem" w={{ base: "50vw", sm: "auto" }} h="100%"
         p={10} align="center" bg="#F8F9FA" borderRadius="xl" boxShadow="2xl" spacing={6}>
 
           <Heading fontSize="4xl" fontWeight="bold" color="#2b2d42">Sign up</Heading>
           <Text fontSize="md" fontWeight="semibold" color="#2b2d42">Please enter your account details</Text>
 
-          <FormControl mt={16} isInvalid={isError}>
+          <FormControl mt={2} isInvalid={isError}>
             <FormLabel color="#2b2d42">Email address</FormLabel>
               <InputGroup>
                 <Input onChange={e => setRegisterData({...registerData, email: e.target.value})} value={registerData.email} type="email"
-                  minW="20rem" maxW="24rem" minH="2.5rem" maxH="3rem" w={{ base: "70vw", sm: "auto" }} h={{ base: "3rem", sm: "auto" }}
+                  minW="20rem" maxW="24rem" minH="2.5rem" maxH="3rem" w="100%" h={{ base: "3rem", sm: "auto" }}
                   bg="#DEE2E6" variant="filled" _hover={{ bg: "#CED4DA" }} _focus={{bg: "#CED4DA", borderColor: "#ADB5BD", borderWidth: "thin"}}/>
               </InputGroup>
               <FormErrorMessage color="#ef233c" fontSize="small">{errors.email}</FormErrorMessage>
           </FormControl>
         
-          <FormControl mt={24} isInvalid={isError}>
+          <FormControl mt={2} isInvalid={isError}>
             <FormLabel color="#2b2d42">Password</FormLabel>
               <InputGroup>
-                <Input onChange={e => setRegisterData({...registerData, password: e.target.value})} value={registerData.password} type="text"
-                  minW="20rem" maxW="24rem" minH="2.5rem" maxH="3rem" w={{ base: "70vw", sm: "auto" }} h={{ base: "3rem", sm: "auto" }}
+                <Input onChange={e => setRegisterData({...registerData, password: e.target.value})} value={registerData.password} type="password"
+                  minW="20rem" maxW="24rem" minH="2.5rem" maxH="3rem" w="100%" h={{ base: "3rem", sm: "auto" }}
                   bg="#DEE2E6" variant="filled" _hover={{ bg: "#CED4DA" }} _focus={{bg: "#CED4DA", borderColor: "#ADB5BD", borderWidth: "thin"}}/>
               </InputGroup>
               <FormErrorMessage color="#ef233c" fontSize="small">{errors.password}</FormErrorMessage>
           </FormControl>
 
-          <FormControl mt={24} isInvalid={isError}>
+          <FormControl mt={2} isInvalid={isError}>
             <FormLabel color="#2b2d42">Repeat password</FormLabel>
               <InputGroup>
-                <Input onChange={e => setRegisterData({...registerData, repeatedPassword: e.target.value})} value={registerData.repeatedPassword} type="text"
-                  minW="20rem" maxW="24rem" minH="2.5rem" maxH="3rem" w={{ base: "70vw", sm: "auto" }} h={{ base: "3rem", sm: "auto" }}
+                <Input onChange={e => setRegisterData({...registerData, repeatedPassword: e.target.value})} value={registerData.repeatedPassword} type="password"
+                  minW="20rem" maxW="24rem" minH="2.5rem" maxH="3rem" w="100%" h={{ base: "3rem", sm: "auto" }}
                   bg="#DEE2E6" variant="filled" _hover={{ bg: "#CED4DA" }} _focus={{bg: "#CED4DA", borderColor: "#ADB5BD", borderWidth: "thin"}}/>
               </InputGroup>
               <FormErrorMessage color="#ef233c" fontSize="small">{errors.repeatedPassword}</FormErrorMessage>
           </FormControl>
 
-          <Button onClick={handleRegisterSubmit} mt={6} fontSize="md" minW="10rem" maxW="14rem" minH="2.5em" maxH="3rem"
+          <Button onClick={handleRegisterSubmit} mt={2} fontSize="md" minW="10rem" maxW="14rem" minH="2.5em" maxH="3rem"
             w={{ base: "30vw", sm: "auto" }} h={{ base: "5vh", sm: "4vh" }}
             bg="#248277" color="#F8F9FA" _hover={{ bg: "#14746f" }}
           >Create account</Button>

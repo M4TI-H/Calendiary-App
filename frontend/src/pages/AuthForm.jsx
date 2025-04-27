@@ -1,19 +1,20 @@
-import { useState } from "react"
-import { Outlet, Navigate } from "react-router-dom"
+import { useEffect } from "react"
+import { Outlet, useNavigate } from "react-router-dom"
 
 export default function AuthForm (){
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+    }
+    else {
+      localStorage.removeItem("accessToken");
+      navigate("/login");
+    }
+  }, [navigate]);
+
   return (
-    <>
-        {isLoggedIn ? (
-          <Navigate to="/" />
-        ) : (
-          <>
-            <Outlet />
-          </>
-        )}
-    </>
+    <Outlet />
   )
 }
-
