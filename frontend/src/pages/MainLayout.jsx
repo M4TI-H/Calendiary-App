@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Flex } from '@chakra-ui/react';
-import LogoutButton from './main/components/LogoutButton';
 import Sidebar from './main/components/Sidebar';
 
 export default function MainLayout() {

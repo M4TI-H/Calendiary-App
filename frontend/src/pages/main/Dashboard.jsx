@@ -1,7 +1,6 @@
-import React from 'react'
 import { Flex } from "@chakra-ui/react";
 
-export default function Home () {
+export default function Dashboard () {
   return (
     <Flex>
       Home

@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Home } from './pages/main';
+import { Dashboard, Notes, Calendar, Todo, Wellness } from './pages/main';
 import LoginForm from "./pages/forms/LoginForm";
 import SignupForm from "./pages/forms/SignupForm";
 import AuthForm from "./pages/AuthForm"
@@ -15,7 +15,11 @@ export default function AppRoutes() {
       </Route>
       {/* private */}
       <Route element={<MainLayout />}>
-        <Route index element={<Home />} />
+        <Route index element={<Dashboard />} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/notes" element={<Notes />} />
+        <Route path="/todo" element={<Todo />} />
+        <Route path="/wellness" element={<Wellness />} />
       </Route>
     </Routes>
   );
