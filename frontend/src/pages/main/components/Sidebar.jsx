@@ -7,13 +7,13 @@ import LogoutBtn from './LogoutBtn.jsx';
 export default function Sidebar() {
   
   return(
-    <VStack maxW="12vw" minW="10rem" w="100%" h="100vh" position="fixed" bg="#F8F9FA">
+    <VStack maxW="12vw" minW="10rem" w="18rem" h="100vh" position="sticky" top="0" bg="#F8F9FA">
       <HStack w="100%" h="10vh" justifyContent="center">
-        <Image src="logo.png" maxH="8vh"/>
+        <Image src="logo.png" maxH="5rem"/>
         <Text fontSize="lg" fontWeight="semibold" color="#2b2d42">Calendiary</Text>
       </HStack>
 
-      <Divider w="100%" color="#ADB5BD" borderWidth="1px" />
+      <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" />
 
       <VStack w="100%" spacing={1} alignItems="center">
         <Text fontSize="sm" fontWeight="semibold" color="#ADB5BD"
@@ -26,7 +26,7 @@ export default function Sidebar() {
         <SidebarBtn content={"Wellness Log"} icon={<BiBody />} link={"/wellness"}/>
       </VStack>
 
-      <Divider w="100%" color="#ADB5BD" borderWidth="1px" />
+      <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" />
 
       <VStack w="100%" spacing={1} alignItems="center" mt="auto" mb="1rem">
         <Text fontSize="sm" fontWeight="semibold" color="#ADB5BD"

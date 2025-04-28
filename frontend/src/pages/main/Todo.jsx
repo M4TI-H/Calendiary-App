@@ -5,5 +5,5 @@ export default function Todo () {
     <Flex>
       Todo
     </Flex>
-  )
+  );
 }

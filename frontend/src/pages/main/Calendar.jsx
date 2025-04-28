@@ -5,5 +5,5 @@ export default function Calendar () {
     <Flex>
       Calendar
     </Flex>
-  )
+  );
 }

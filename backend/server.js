@@ -3,11 +3,13 @@ import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 import cors from 'cors';
 import authRouter from "./routes/authQueries.js";
+import userRouter from "./routes/userDataQueries.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json()); 
 app.use('/auth', authRouter);
+app.use('/user', userRouter);
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;

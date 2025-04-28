@@ -5,5 +5,5 @@ export default function Notes () {
     <Flex>
       Notes
     </Flex>
-  )
+  );
 }

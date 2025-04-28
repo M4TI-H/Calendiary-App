@@ -89,7 +89,7 @@ export default function SignupForm () {
           </FormControl>
 
           <Button onClick={handleRegisterSubmit} mt={2} fontSize="md" minW="10rem" maxW="14rem" minH="2.5em" maxH="3rem"
-            w={{ base: "30vw", sm: "auto" }} h={{ base: "5vh", sm: "4vh" }}
+            w={{ base: "30vw", sm: "auto" }} h={{ base: "5vh", sm: "4vh" }} 
             bg="#248277" color="#F8F9FA" _hover={{ bg: "#14746f" }}
           >Create account</Button>
 

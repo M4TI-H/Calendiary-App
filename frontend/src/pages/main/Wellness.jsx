@@ -5,5 +5,5 @@ export default function Wellness () {
     <Flex>
       Wellness
     </Flex>
-  )
+  );
 }
