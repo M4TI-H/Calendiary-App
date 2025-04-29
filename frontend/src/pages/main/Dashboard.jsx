@@ -9,7 +9,7 @@ export default function Dashboard () {
 
 
   return (
-    <VStack w="80vw" h="auto" mt="1rem" bg="#F8F9FA" borderTopRadius="xl">
+    <VStack w="80vw" h="auto" mt="1rem" bg="#F8F9FA" borderTopRadius="xl" p="2">
       <Flex w="100%" h="5rem" pl="5" justify="center" flexDir="column">
         <Heading fontSize="4xl" fontWeight="semibold">Welcome, {userData.name}</Heading>
         <Text fontSize="xl" ml="1">What are you up to today?</Text>
@@ -18,7 +18,6 @@ export default function Dashboard () {
       <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" />
 
       <Flex w="auto" h="auto" flexDir="column" justify="center" pt="2" px="8" mb="4">
-        <Heading fontSize="xl" pb="4" textAlign="center">Select action</Heading>
         <Wrap spacing="8" alignItems="center" justify="center">
           <WrapItem>
             <Flex as={ Link } to="/notes" w="10rem" h="10rem" p="2" flexDir="column" justify="center" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
@@ -53,7 +52,7 @@ export default function Dashboard () {
 
       <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" />
 
-      <Flex w="auto" h="auto" flexDir="column" justify="center" pt="2" px="8">
+      <Flex w="auto" h="auto" flexDir="column" pt="2" px="8">
         <Heading fontSize="2xl" pb="4">Recent notes:</Heading>
         <Wrap spacing="8" alignItems="center" justify="center">
           <WrapItem>
@@ -66,7 +65,7 @@ export default function Dashboard () {
             <Note title={"Test Note"} content={"This is test note."} date={"28 April 2025 7:00pm"} color={"yellow.300"}/>
           </WrapItem>
           <WrapItem>
-            <Button as={ Link } to="/notes" bg="#212529" color="#F8F9FA" _hover={{bg: "#343A40"}}>Show all</Button>
+            <Button as={ Link } to="/notes" bg="#212529" color="#F8F9FA" _hover={{bg: "#343A40"}} pos="absolute">Show all</Button>
           </WrapItem>
         </Wrap>
       </Flex>

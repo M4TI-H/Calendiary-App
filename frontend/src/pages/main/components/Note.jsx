@@ -1,7 +1,10 @@
-import { Link } from 'react-router-dom';
-import { Flex, Text, Button, Heading } from '@chakra-ui/react';
+import { Flex, Text, Heading } from '@chakra-ui/react';
 
 export default function Note({ title, content, date, color }) {
+
+  function handleNoteSelect() {
+    console.log("Double clicked!");
+  }
 
   return(
     <Flex onDoubleClick={() => handleNoteSelect()} w="20rem" h="20rem" flexDir="column" wrap="wrap" p="3" borderRadius="2xl"
