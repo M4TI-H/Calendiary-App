@@ -1,7 +1,10 @@
+import { useState, useEffect } from 'react';
 import { Flex, VStack, Heading, Divider, Wrap, WrapItem, Text } from "@chakra-ui/react";
+import axios from 'axios';
 import TodoList from "./components/TodoList";
 
 export default function Todo () {
+    
   return (
     <VStack w="80vw" h="auto" mt="1rem" bg="#F8F9FA" borderTopRadius="xl" p="2">
       <Heading>Your to-dos</Heading>

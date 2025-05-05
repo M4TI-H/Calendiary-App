@@ -34,7 +34,7 @@ export default function MainLayout() {
 
 
   return (
-    <HStack w="100vw" h="100vh" bg="#2a9d8f" overflowX="hidden" direction="row" justify="space-between" spacing="0"
+    <HStack w="100vw" h="100vh" bg="#2a9d8f" direction="row" justify="space-between" spacing="0"
     bgImage={{ base: "none", md: "url('background.png')" }}  bgRepeat="no-repeat" bgSize="cover" bgPosition="center" bgAttachment="fixed">
       <Sidebar />
       <Flex flex="1" w="100%" h="100%" justifyContent="center">

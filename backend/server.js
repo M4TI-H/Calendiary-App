@@ -4,12 +4,14 @@ import dotenv from "dotenv";
 import cors from 'cors';
 import authRouter from "./routes/authQueries.js";
 import userRouter from "./routes/userDataQueries.js";
+import mainRouter from "./routes/mainContentQueries.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json()); 
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
+app.use('/main', mainRouter);
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
