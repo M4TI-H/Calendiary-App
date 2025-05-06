@@ -1,25 +1,37 @@
 import { useState } from 'react';
-import { Flex, Text, Button, ListItem, Tooltip, IconButton, Input } from '@chakra-ui/react';
+import { Flex, Text, Button, ListItem, Tooltip, IconButton, Input, VStack } from '@chakra-ui/react';
 import { BiCheckCircle, BiCircle, BiTrash, BiSolidEdit  } from "react-icons/bi";
 import axios from 'axios';
 
 
-export default function TodoTask({id, content, due_date}) {
+export default function TodoTask({id, content, due_date, onDelete}) {
   const [isTaskDone, setIsTaskDone] = useState(false);
   const [isDoubleClicked, setIsDoubleClicked] = useState(false);
   const [editedText, setEditedText] = useState("");
   const [displayedText, setDisplayedText] = useState(content);
-  const dueDate = due_date.slice(0, 10);
+  let dueDate = null;
+  if (due_date) {
+    dueDate = due_date.slice(0, 10);
+  }
 
-  const updateTask = async (updatedData) => {
-    console.log("Sending update for task", id, updatedData);
-    axios.patch("http://localhost:8000/main/todo/update_task", {
-      todo_id: id,
-      ...updatedData
-    })
-    .catch((err) => {
+  async function updateTask(updatedData){
+    try {
+      await axios.patch("http://localhost:8000/main/todo/update_task", {
+        todo_id: id,
+        ...updatedData
+      });
+    } catch(err) {
       console.error(`error: ${err.message}`);
-    })
+    }
+  }
+
+  async function deleteTask() {
+    try {
+      await axios.delete(`http://localhost:8000/main/todo/delete_task/${id}`);
+      onDelete();   //instantly update current task list
+    } catch(err) {
+      console.error(`error: ${err.message}`);
+    }
   }
 
   function setTaskStatus() {
@@ -29,10 +41,17 @@ export default function TodoTask({id, content, due_date}) {
   }
 
   function textDoubleClick() {
+    setEditedText(displayedText);
     setIsDoubleClicked(!isDoubleClicked);
   }
 
   function submitTextChange() {
+    //don't update if nothing changed
+    if (editedText.trim() === displayedText.trim()) {
+      setIsDoubleClicked(false);
+      return;
+    }
+
     setIsTaskDone(false);
     setIsDoubleClicked(!isDoubleClicked);
     setDisplayedText(editedText);
@@ -40,7 +59,7 @@ export default function TodoTask({id, content, due_date}) {
   }
 
   return(
-    <ListItem align="end">
+    <VStack align="flex-end">
       <Flex w="22rem" h="3rem" pl={isDoubleClicked ? "0" : "3"} pr={isDoubleClicked ? "0" : "1"} py="1" flexDir="row" align="center" borderRadius="lg" boxShadow="md" 
       borderWidth={isDoubleClicked ? "2px" : "1px"} borderColor={isDoubleClicked ? "#248277" : "#CED4DA"} bg="#F8F9FA">
         {!isDoubleClicked ?
@@ -57,6 +76,7 @@ export default function TodoTask({id, content, due_date}) {
         {isDoubleClicked ?
           <Flex w="100%" align="baseline" justify="space-between" p="0">
             <Input defaultValue={content} onChange={e => setEditedText(e.target.value)} border="none" _focusVisible="false"/>
+            
             <IconButton h="3rem" w="3rem" bg="#248277" _hover={{bg: "#14746f"}}  onClick={submitTextChange}
               border="2px" borderColor="#248277" borderX="none" borderRadius="lg" borderLeftRadius="none">
             <BiSolidEdit/></IconButton>
@@ -66,16 +86,14 @@ export default function TodoTask({id, content, due_date}) {
           }
         {isDoubleClicked ? <></> : (
           isTaskDone ? (
-            <IconButton bg="none" _hover={{ bg: "rgba(193, 18, 31, 0.5)", color: "#780000" }} ml="auto" borderRadius="lg"> 
+            <IconButton onClick={deleteTask} bg="none" _hover={{ bg: "rgba(193, 18, 31, 0.5)", color: "#780000" }} ml="auto" borderRadius="lg"> 
               <BiTrash size="1.4rem" />
             </IconButton>
           ) : <></>
         )}
       </Flex>
-      {due_date && !isTaskDone ? <Text color="#ADB5BD" mr="2" mt="1" fontSize="sm">Due: {dueDate}</Text> : <></>}
-      
-    </ListItem>
-      
+      {due_date && !isTaskDone ? <Text color="#ADB5BD" mr="2" fontSize="sm">Due: {dueDate}</Text> : <></>}
+    </VStack>
   );
 }
 
