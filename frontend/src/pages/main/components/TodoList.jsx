@@ -10,11 +10,25 @@ export default function TodoList({title, date}) {
   const [taskData, setTaskData] = useState([]);
   const [newTaskData, setNewTaskData] = useState({
     description: "",
-    due_date: ""
+    due_date: "",
   });
   const [createNewTask, setCreateNewTask] = useState(false);
   const token = localStorage.getItem("accessToken");
 
+  function formatDate(date) {
+    const options = {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    };
+
+    if (!(date instanceof Date)) {
+      date = new Date(date);
+    }
+
+    date.setHours(0, 0, 0, 0);
+    return date.toLocaleString("en-GB", options).replace(",", "").toString();
+  }
 
   useEffect(() => {
     if (token) {
@@ -37,11 +51,18 @@ export default function TodoList({title, date}) {
 
   async function addTask(newTaskData) {
     try {
-      const response = await axios.post("http://localhost:8000/main/todo/add_task", newTaskData, {
-        headers: { 
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}` 
+      const dueDate = newTaskData.due_date
+        ? new Date(newTaskData.due_date).toLocaleDateString('en-CA')
+        : null;
+      const response = await axios.post("http://localhost:8000/main/todo/add_task", 
+        { 
+          description: newTaskData.description, 
+          due_date: dueDate
+        }, 
+        { 
+          headers: { Authorization: `Bearer ${token}` }
         }
-      });
+      );
       
       const newTask = response.data.task;
       setTaskData(prev => [...prev, newTask]);
@@ -56,9 +77,9 @@ export default function TodoList({title, date}) {
     ({value, onClick}, ref) => (
       <Flex align="center">
         <Link ref={ref} onClick={onClick} fontSize="sm" fontWeight="semibold" color="#ADB5BD">
-          {newTaskData.due_date === "" ? "Select due date" : `Due: ${value}` }
+          {newTaskData.due_date ? `Due: ${formatDate(newTaskData.due_date)}` : "Select due date"}
         </Link>
-        {newTaskData.due_date === "" ? <></> : <BiX onClick={() => setNewTaskData({ ...newTaskData, due_date: "" })} color="#ADB5BD" size="1rem" style={{cursor: "pointer"}}/>}
+        {value ? <BiX onClick={() => setNewTaskData({ ...newTaskData, due_date: "" })} color="#ADB5BD" size="1rem" style={{cursor: "pointer"}}/> : <></>}
       </Flex>
     )
   )
@@ -85,13 +106,14 @@ export default function TodoList({title, date}) {
               
             </Flex>
             <HStack justify="space-between" w="100%" px="4">
-
-              <DatePicker closeOnScroll="true"
+              <DatePicker 
+                closeOnScroll="true"
                 selected={newTaskData.due_date} 
-                onChange={date => setNewTaskData({...newTaskData, due_date: date})}
+                onChange={date => {
+                  setNewTaskData({...newTaskData, due_date: date});
+                }}
                 customInput={<DatePickerInput/>}
               />
-              
               <Link onClick={() => setCreateNewTask(false)} fontSize="sm" fontWeight="semibold" color="#ADB5BD">Cancel</Link>
             </HStack>
 

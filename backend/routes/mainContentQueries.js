@@ -93,14 +93,12 @@ router.post("/todo/add_task", async (req, res) => {
 
     let { description, due_date } = req.body;
     
-    if (!due_date || due_date === "") {
+    if (!due_date || due_date.trim() === "") {
       due_date = null;
     }
 
-    const date_now = new Date();
-    const create_date = date_now.toISOString().split('T')[0] + ' ' + date_now.toTimeString().split(' ')[0];
-
-    const values = [user_id, description, due_date, create_date, false]
+    let dateNow = new Date();
+    const values = [user_id, description, due_date, dateNow, false]
     const [result] = await db.query(`INSERT INTO todo_tasks (user_id, description, due_date, create_date, status) VALUES (?)`, [values]);
     
     const [newTask] = await db.query(`SELECT * FROM todo_tasks WHERE todo_id = ?`, [result.insertId]);

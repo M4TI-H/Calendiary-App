@@ -23,7 +23,7 @@ export default function Dashboard () {
             <Flex as={ Link } to="/notes" w="10rem" h="10rem" p="2" flexDir="column" justify="center" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
             _hover={{bg: "#F1F3F5", cursor: "pointer", transition: "ease-in .2s", transform: "scale(1.05, 1.05)"}}>
               <BiNote size="3rem"/>
-              <Text textAlign="center" fontSize="sm" fontWeight="semibold">Create new note</Text>
+              <Text textAlign="center" fontSize="sm" fontWeight="semibold">Create a note</Text>
             </Flex>
           </WrapItem>
           <WrapItem>

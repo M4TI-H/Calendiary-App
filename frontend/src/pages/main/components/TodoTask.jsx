@@ -3,17 +3,30 @@ import { Flex, Text, Button, ListItem, Tooltip, IconButton, Input, VStack } from
 import { BiCheckCircle, BiCircle, BiTrash, BiSolidEdit  } from "react-icons/bi";
 import axios from 'axios';
 
-
 export default function TodoTask({id, content, due_date, onDelete}) {
   const [isTaskDone, setIsTaskDone] = useState(false);
   const [isDoubleClicked, setIsDoubleClicked] = useState(false);
   const [editedText, setEditedText] = useState("");
   const [displayedText, setDisplayedText] = useState(content);
-  let dueDate = null;
-  if (due_date) {
-    dueDate = due_date.slice(0, 10);
-  }
 
+  function formatDate(date) {
+    const dateOptions = {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    };
+  
+    if (!(date instanceof Date)) {
+      date = new Date(date);
+    }
+
+    date.setHours(0, 0, 0, 0);
+    return date.toLocaleString("en-GB", dateOptions).replace(",", "");
+  }
+  let dateNow = new Date();
+  dateNow = formatDate(dateNow);
+  const dueDate = formatDate(due_date);
+  
   async function updateTask(updatedData){
     try {
       await axios.patch("http://localhost:8000/main/todo/update_task", {
@@ -61,10 +74,10 @@ export default function TodoTask({id, content, due_date, onDelete}) {
   return(
     <VStack align="flex-end">
       <Flex w="22rem" h="3rem" pl={isDoubleClicked ? "0" : "3"} pr={isDoubleClicked ? "0" : "1"} py="1" flexDir="row" align="center" borderRadius="lg" boxShadow="md" 
-      borderWidth={isDoubleClicked ? "2px" : "1px"} borderColor={isDoubleClicked ? "#248277" : "#CED4DA"} bg="#F8F9FA">
+      borderWidth={isDoubleClicked ? "2px" : "1px"} borderColor={isDoubleClicked ? "#248277" : "#CED4DA"} bg={isTaskDone ? "#2b2d42" : "#F8F9FA"}>
         {!isDoubleClicked ?
         (<Tooltip label="Change task status" openDelay="700" bg="#F8F9FA" borderWidth="1px" borderColor="#CED4DA" color="#2b2d42" borderRadius="md" placement="left">
-          <Flex onClick={() => setTaskStatus()} h="1.5rem" w="1.5rem" borderRadius="full" bg="#aacc00" _hover={{bg: "#80b918"}}>
+          <Flex onClick={() => setTaskStatus()} h="1.5rem" w="1.5rem" borderRadius="full" bg="#aacc00" _hover={{bg: "#80b918", cursor: "pointer"}}>
             {isTaskDone ? 
             <BiCheckCircle size="100%" color="#007f5f"/>
             :
@@ -82,7 +95,9 @@ export default function TodoTask({id, content, due_date, onDelete}) {
             <BiSolidEdit/></IconButton>
           </Flex>
           :
-          <Text onDoubleClick={textDoubleClick} ml="3" mr="2" decoration={isTaskDone ? "line-through" : "none"} color={isTaskDone ? "#ADB5BD" : "#2b2d42"} fontWeight="semibold">{displayedText}</Text>
+          <Text onDoubleClick={textDoubleClick} ml="3" mr="2" decoration={isTaskDone ? "line-through" : "none"} 
+          color={isTaskDone ? "#ADB5BD" : "#2b2d42"} fontWeight="semibold" _hover={{cursor: "default"}}>
+            {displayedText}</Text>
           }
         {isDoubleClicked ? <></> : (
           isTaskDone ? (
@@ -92,7 +107,7 @@ export default function TodoTask({id, content, due_date, onDelete}) {
           ) : <></>
         )}
       </Flex>
-      {due_date && !isTaskDone ? <Text color="#ADB5BD" mr="2" fontSize="sm">Due: {dueDate}</Text> : <></>}
+      {due_date && !isTaskDone ? <Text color={new Date(dateNow) < new Date(dueDate) ? "#ADB5BD" : "#ef233c"} mr="2" fontSize="sm">Due: {dueDate}</Text> : <></>}
     </VStack>
   );
 }

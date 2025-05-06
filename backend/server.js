@@ -24,7 +24,7 @@ const db = await mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "calendiary"
+    database: "calendiary",
 });
 
 export default db;
