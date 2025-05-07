@@ -9,22 +9,25 @@ export default function MainLayout() {
     const [userData, setUserData] = useState({
       email: "",
       name: ""
-    })
+    });
+    const token = localStorage.getItem("accessToken");
+    
+    function fetchUserData() {
+      axios.get('http://localhost:8000/user/get_user_data', {
+        headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` }
+      })
+      .then((res) => {
+        setUserData({...userData, email: res.data.user.email, name: res.data.user.nickname});
+      })
+      .catch((err) => {
+        console.error(` error: ${err.message}`);
+      })
+    }
     
     //fetch user data 
     useEffect(() => {
-      const token = localStorage.getItem("accessToken");
       if (token) {
-        axios.get('http://localhost:8000/user/get_user_data', {
-          headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` }
-        })
-        .then((res) => {
-          setUserData({...userData, email: res.data.user.email, name: res.data.user.nickname});
-
-        })
-        .catch((err) => {
-          console.error(` error: ${err.message}`);
-        })
+        fetchUserData();
       }
       else {
         localStorage.removeItem("accessToken");

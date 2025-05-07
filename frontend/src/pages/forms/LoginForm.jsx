@@ -92,7 +92,7 @@ export default function LoginForm () {
                   minW="20rem" maxW="24rem" minH="2.5rem" maxH="3rem" w="100%" h={{ base: "3rem", sm: "auto" }}
                   bg="#DEE2E6" variant="filled" _hover={{ bg: "#CED4DA" }} _focus={{bg: "#CED4DA", borderColor: "#ADB5BD", borderWidth: "thin"}}/>
               </InputGroup>
-              <FormErrorMessage color="#ef233c" fontSize="small">{errors.email}</FormErrorMessage>
+              <FormErrorMessage color="#ef233c" fontSize="sm">{errors.email}</FormErrorMessage>
           </FormControl>
         
           <FormControl mt={4} isInvalid={isError}>
@@ -108,10 +108,9 @@ export default function LoginForm () {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              <FormErrorMessage color="#ef233c" fontSize="small">{errors.password}</FormErrorMessage>
+              <FormErrorMessage color="#ef233c" fontSize="sm">{errors.password}</FormErrorMessage>
             <Checkbox pos="absolute" right="0" mt={2}>Remember me</Checkbox>
           </FormControl>
-
 
           <Button onClick={handleLoginSubmit} mt={6} fontSize="md" minW="10rem" maxW="14rem" minH="2em" maxH="3rem"
             w={{ base: "30vw", sm: "auto" }} h={{ base: "5vh", sm: "4vh" }}
