@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Flex, VStack, Heading, Divider, Wrap, WrapItem, Text, Input, Link, Button, } from "@chakra-ui/react";
+import { Flex, VStack, Heading, Divider, Wrap, WrapItem, Text, Input, Link, Button, HStack, } from "@chakra-ui/react";
 import axios from 'axios';
 import TodoList from "./components/TodoList";
 
@@ -8,6 +8,8 @@ export default function Todo () {
   const [isListCreated, setIsListCreated] = useState(false);
   const [listTitle, setListTitle] = useState("");
   const [inputError, setInputError] = useState("");
+  const [expandedList, setExpandedList] = useState(null);
+
   const token = localStorage.getItem("accessToken");
   
   function formatDate(date) {
@@ -15,8 +17,9 @@ export default function Todo () {
       day: "2-digit",
       month: "short",
       year: "numeric",
-      hour: "numeric",
+      hour: "2-digit",
       minute: "2-digit",
+      second: "2-digit",
       hour12: true
     };
 
@@ -73,13 +76,13 @@ export default function Todo () {
   }
 
   return (
-    <VStack w="80vw" h="auto" mt="1rem" bg="#F8F9FA" borderTopRadius="xl" p="2">
-      <Heading>Your to-dos</Heading>
+    <VStack w="80vw" h="auto" mt="8" bg="#F8F9FA" borderTopRadius="xl" p="2">
+      <Heading py="3">Your to-dos</Heading>
 
-      <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" />
+      <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" mb="5"/>
 
-      <Flex flexDir="row" align="center" justify="center">
-        <Wrap spacing="5" align="center" justify="center">
+      <HStack>
+        <Wrap spacing="5" justify="center">
           {!isListCreated ?
           <WrapItem>
             <Flex onClick={() => setIsListCreated(true)} w="10rem" h="10rem" p="2" flexDir="column" justify="center" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
@@ -91,7 +94,7 @@ export default function Todo () {
           <WrapItem>
             <Flex w="25rem" h="30rem" p="3" flexDir="column" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
               bg="#F8F9FA" _hover={{bg: "#F1F3F5", cursor: "pointer", transition: "ease-in .2s"}}>
-              <Input onChange={e => setListTitle(e.target.value)} w="19rem" h="3rem" placeholder="Set list title"  
+              <Input onChange={e => setListTitle(e.target.value)} w="19rem" h="3rem" placeholder="Set list title"  maxLength="60"
               borderColor="#248277" borderWidth="2px" borderRadius="lg" bg="#F8F9FA" _focusVisible="false" _hover="none"/>
               
               <Divider borderWidth="1px" w="90%" my="2"/>
@@ -105,11 +108,11 @@ export default function Todo () {
           }
           
           {todosData.map(list => (
-            <TodoList key={list.todo_list_id} list_id={list.todo_list_id} title={list.title} 
+            <TodoList key={list.todo_list_id} list_id={list.todo_list_id} title={list.title} expandedList={expandedList} setExpandedList={setExpandedList}
             date={list.create_date} favorite={list.favorite} bookmark={list.bookmark} onListDelete={() => {setTodosData(prev => prev.filter(l => l.todo_list_id !== list.todo_list_id))}}/>
           ))}
         </Wrap>
-      </Flex>
+      </HStack>
     </VStack>
   );
 }

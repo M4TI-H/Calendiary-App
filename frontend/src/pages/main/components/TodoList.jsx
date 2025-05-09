@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import TodoTask from './TodoTask';
 
-export default function TodoList({list_id, title, date, onListDelete}) {
+export default function TodoList({list_id, title, date, onListDelete, expandedList, setExpandedList}) {
   const [taskData, setTaskData] = useState([]);
   const [newTaskData, setNewTaskData] = useState({
     description: "",
@@ -113,15 +113,15 @@ export default function TodoList({list_id, title, date, onListDelete}) {
 
   return(
     <WrapItem>
-      <Flex w="25rem" h="30rem" p="3" flexDir="column" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
+      <Flex w="25rem" h={list_id === expandedList ? "auto" : "28rem"} p="3"  flexDir="column" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
         bg="#F8F9FA" _hover={{bg: "#F1F3F5", transition: "ease-in .2s"}}>
-        <HStack w="100%" align="center" justify="center" pos="relative">
-          <Text fontSize="xl" fontWeight="semibold" >{title}</Text>
+        <HStack w="100%" maxH="5rem" h="auto" align="center" justify="start" pos="relative" pl="4">
+          <Text maxW="18rem" fontSize="xl" fontWeight="semibold">{title}</Text>
           <IconButton onClick={() => setCreateNewTask(true)} pos="absolute" right="0" mr="4"><BiListPlus /></IconButton>
         </HStack>
         
         <Divider borderWidth="1px" w="90%" my="2"/>
-        <VStack spacing="2" w="100%">
+        <VStack spacing="2" w="100%" py="2">
           {createNewTask && 
             <VStack w="100%" _hover={{cursor: "default"}}>
               <FormControl isInvalid={inputError !== ""}>
@@ -148,13 +148,16 @@ export default function TodoList({list_id, title, date, onListDelete}) {
               </HStack>
             </VStack>
           }
-          {taskData.map(task => {
+          {(list_id === expandedList ? taskData : taskData.slice(0, 5)).map(task => {
             return <TodoTask key={task.todo_id} id={task.todo_id} content={task.description} due_date={task.due_date} 
             onDelete={() => {setTaskData(prev => prev.filter(t => t.todo_id !== task.todo_id))}}/>
           })}
         </VStack>
         <HStack px="3" w="100%" mt="auto" justify="space-between" align="center">
           <Link onClick={() => removeList()} fontSize="sm" fontWeight="semibold" color="#ADB5BD">Remove list</Link>
+          <Link onClick={() => setExpandedList(list_id === expandedList ? null : list_id)} fontSize="sm" fontWeight="semibold" color="#ADB5BD">
+            {list_id === expandedList ? "Hide" : "Show all"}
+          </Link>
           <Text fontSize="sm" color="#ADB5BD">{date}</Text>
         </HStack>    
       </Flex>
