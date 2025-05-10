@@ -29,7 +29,7 @@ export default function TodoTask({id, content, due_date, onDelete}) {
   
   async function updateTask(updatedData){
     try {
-      await axios.patch("http://localhost:8000/main/todo/update_task", {
+      await axios.patch("http://localhost:8000/todo/update_task", {
         todo_id: id,
         ...updatedData
       });
@@ -40,7 +40,7 @@ export default function TodoTask({id, content, due_date, onDelete}) {
 
   async function deleteTask() {
     try {
-      await axios.delete(`http://localhost:8000/main/todo/delete_task/${id}`);
+      await axios.delete(`http://localhost:8000/todo/delete_task/${id}`);
       onDelete();   //instantly update current task list
     } catch(err) {
       console.error(`error: ${err.message}`);
@@ -113,4 +113,3 @@ export default function TodoTask({id, content, due_date, onDelete}) {
     </VStack>
   );
 }
-

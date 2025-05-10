@@ -5,6 +5,7 @@ import cors from 'cors';
 import authRouter from "./routes/authQueries.js";
 import userRouter from "./routes/userDataQueries.js";
 import mainRouter from "./routes/mainContentQueries.js";
+import todoRouter from "./routes/todoTaskQueries.js";
 
 const app = express();
 app.use(cors());
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/main', mainRouter);
+app.use('/todo', todoRouter);
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;

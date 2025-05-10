@@ -2,11 +2,36 @@ import { useState, useEffect } from "react";
 import { useOutletContext, Link } from "react-router-dom";
 import { Flex, Text, VStack,Divider, Wrap, WrapItem, Heading, Button } from "@chakra-ui/react";
 import { BiListUl, BiNote, BiCalendar, BiBody } from "react-icons/bi";
+import axios from "axios";
 import Note from "./components/Note";
+import TodoTask from "./components/TodoTask";
 
 export default function Dashboard () {
   const { userData } = useOutletContext();
+  const [taskData, setTaskData] = useState([]);
+  const token = localStorage.getItem("accessToken");
 
+  function fetchTodaysTasks() {
+    axios.get("http://localhost:8000/todo/fetch_todays_tasks", { 
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => {
+      setTaskData(res.data.task);
+    })
+    .catch((err) => {
+      console.error(`error: ${err.message}`);
+    })
+  }
+
+  useEffect(() => {
+    if (token) {
+      fetchTodaysTasks();
+    }
+    else {
+      localStorage.removeItem("accessToken");
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <VStack w="80vw" h="auto" mt="1rem" bg="#F8F9FA" borderTopRadius="xl" p="2">
@@ -17,7 +42,7 @@ export default function Dashboard () {
 
       <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" />
 
-      <Flex w="auto" h="auto" flexDir="column" justify="center" pt="2" px="8" mb="4">
+      <Flex w="auto" h="auto" flexDir="column" justify="center" pt="2" px="8">
         <Wrap spacing="8" alignItems="center" justify="center">
           <WrapItem>
             <Flex as={ Link } to="/notes" w="10rem" h="10rem" p="2" flexDir="column" justify="center" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
@@ -50,7 +75,25 @@ export default function Dashboard () {
         </Wrap>
       </Flex>
 
-      <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" />
+      {taskData.length > 0 && 
+      <>
+        <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" my="5"/>
+
+        <Flex w="auto" h="auto" flexDir="column" pt="2" px="8" >
+          <Heading fontSize="2xl" pb="4">Tasks for today:</Heading>
+
+          <VStack spacing="2" w="100%" h="auto" py="2">
+            {taskData.map(task => {
+              return <TodoTask key={task.todo_id} id={task.todo_id} content={task.description} due_date={task.due_date} 
+              onDelete={() => {setTaskData(prev => prev.filter(t => t.todo_id !== task.todo_id))}}/>
+            })}
+          </VStack>
+          
+        </Flex>
+      </>
+      }
+
+      <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" my="5"/>
 
       <Flex w="auto" h="auto" flexDir="column" pt="2" px="8">
         <Heading fontSize="2xl" pb="4">Recent notes:</Heading>

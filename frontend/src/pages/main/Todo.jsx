@@ -27,7 +27,7 @@ export default function Todo () {
   }
 
   function fetchTodoLists() {
-    axios.get('http://localhost:8000/main/todo/fetch_todo_lists', {
+    axios.get('http://localhost:8000/todo/fetch_todo_lists', {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then((res) => {
@@ -62,7 +62,7 @@ export default function Todo () {
     dateNow = formatDate(dateNow);
 
     try {
-      const response = await axios.post("http://localhost:8000/main/todo/add_todo_list", 
+      const response = await axios.post("http://localhost:8000/todo/add_todo_list", 
         { title: listTitle, dateNow: dateNow }, 
         { headers: { Authorization: `Bearer ${token}` }
       });
