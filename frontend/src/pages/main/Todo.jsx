@@ -85,7 +85,7 @@ export default function Todo () {
         <Wrap spacing="5" justify="center">
           {!isListCreated ?
           <WrapItem>
-            <Flex onClick={() => setIsListCreated(true)} w="10rem" h="10rem" p="2" flexDir="column" justify="center" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
+            <Flex onClick={() => setIsListCreated(true)} w="10rem" h="10rem" p="2" flexDir="column" justify="center" align="center" borderRadius="xl" boxShadow="xl" borderWidth="2px" borderColor="#E9ECEF"
               bg="#F8F9FA" _hover={{bg: "#F1F3F5", cursor: "pointer", transition: "ease-in .2s", transform: "scale(1.05, 1.05)"}}>
               <Text textAlign="center" fontSize="sm" fontWeight="semibold">Add new task list</Text>
             </Flex>

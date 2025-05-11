@@ -9,6 +9,7 @@ import TodoTask from "./components/TodoTask";
 export default function Dashboard () {
   const { userData } = useOutletContext();
   const [taskData, setTaskData] = useState([]);
+  const [noteData, setNoteData] = useState([]);
   const token = localStorage.getItem("accessToken");
 
   function fetchTodaysTasks() {
@@ -23,9 +24,22 @@ export default function Dashboard () {
     })
   }
 
+  function fetchRecentNotes() {
+    axios.get("http://localhost:8000/note/fetch_recent_notes", { 
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => {
+      setNoteData(res.data.note);
+    })
+    .catch((err) => {
+      console.error(`error: ${err.message}`);
+    })
+  }
+
   useEffect(() => {
     if (token) {
       fetchTodaysTasks();
+      fetchRecentNotes();
     }
     else {
       localStorage.removeItem("accessToken");
@@ -98,15 +112,12 @@ export default function Dashboard () {
       <Flex w="auto" h="auto" flexDir="column" pt="2" px="8">
         <Heading fontSize="2xl" pb="4">Recent notes:</Heading>
         <Wrap spacing="8" alignItems="center" justify="center">
-          <WrapItem>
-            <Note title={"Test Note"} content={"This is test note."} date={"28 April 2025 7:00pm"} color={"yellow.300"}/>
-          </WrapItem>
-          <WrapItem>
-            <Note title={"Test Note"} content={"This is test note."} date={"28 April 2025 7:00pm"} color={"yellow.300"}/>
-          </WrapItem>
-          <WrapItem>
-            <Note title={"Test Note"} content={"This is test note."} date={"28 April 2025 7:00pm"} color={"yellow.300"}/>
-          </WrapItem>
+          {noteData.map(note => {
+              return (
+              <WrapItem>
+                <Note key={note.note_id} note_id={note.note_id} content={note.content} date={note.create_date} color={"yellow.300"}/>
+              </WrapItem>
+            )})}
           <WrapItem>
             <Button as={ Link } to="/notes" bg="#212529" color="#F8F9FA" _hover={{bg: "#343A40"}} pos="absolute">Show all</Button>
           </WrapItem>
