@@ -78,4 +78,33 @@ router.patch("/edit_note", async (req, res) => {
   }
 });
 
+router.post("/add_note", async (req, res) => {
+  try {
+    const authHeader  = req.headers["authorization"];
+    if (!authHeader ) {
+      return res.status(401).json({ status: "Access token missing." });
+    }
+    const accessToken = authHeader.split(' ')[1];
+    const decodedData = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+    const email = decodedData.email;
+
+    const [data] = await db.query("SELECT id FROM user WHERE user.email = ?", [email]);
+    if (data.length === 0) {
+      return res.status(404).json({ status: "User not found." });
+    }
+    const user_id = data[0].id;
+    const { content, dateNow } = req.body;
+
+    const values = [user_id, content, dateNow, null];
+    const [result] = await db.query(`INSERT INTO notes (user_id, content, create_date, bookmark) VALUES (?)`, [values]);
+  
+    const [newNote] = await db.query(`SELECT * FROM notes WHERE note_id = ?`, [result.insertId]);
+    return res.status(200).json({ status: "Note created", note: newNote[0] });
+  }
+  catch (err) {
+    console.error(`An error has occured while creating a note: ${err.message}`);
+    return res.status(500).json({ status: "Internal Server Error", error: err.message });
+  }
+});
+
 export default router;

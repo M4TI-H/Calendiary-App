@@ -70,7 +70,8 @@ export default function Todo () {
       setTodosData(prev => [...prev, newList]);
       fetchTodoLists()
       setListTitle("");
-    } catch (err) {
+    } 
+    catch (err) {
       console.error(`error: ${err.message}`);
     }
   }
