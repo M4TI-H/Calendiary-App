@@ -4,7 +4,7 @@ import { Flex, Text, VStack,Divider, Wrap, WrapItem, Heading, Button } from "@ch
 import { BiListUl, BiNote, BiCalendar, BiBody } from "react-icons/bi";
 import axios from "axios";
 import Note from "./components/Note";
-import TodoTask from "./components/TodoTask";
+import TodoTask from "./components/todo_components/TodoTask";
 
 export default function Dashboard () {
   const { userData } = useOutletContext();

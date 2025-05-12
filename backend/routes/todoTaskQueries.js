@@ -44,9 +44,9 @@ router.post("/add_todo_list", async (req, res) => {
       return res.status(404).json({ status: "User not found." });
     }
     const user_id = data[0].id;
-    const { title, dateNow } = req.body;
+    const { title, dateNow, bookmark } = req.body;
 
-    const values = [user_id, title, dateNow, false, null]
+    const values = [user_id, title, dateNow, false, bookmark]
     const [result] = await db.query(`INSERT INTO todo_list (user_id, title, create_date, favorite, bookmark) VALUES (?)`, [values]);
   
     const [newList] = await db.query(`SELECT * FROM todo_list WHERE todo_list_id = ?`, [result.insertId]);

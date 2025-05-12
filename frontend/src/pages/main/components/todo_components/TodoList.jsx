@@ -1,11 +1,11 @@
 import { useState, useEffect, forwardRef, useRef } from 'react';
-import { Divider, Flex, Text, Input, HStack, IconButton, VStack, Link, FormErrorMessage, FormControl, WrapItem, Button,
-  AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogContent, useDisclosure} from '@chakra-ui/react';
-import { BiListPlus, BiSolidEdit, BiX } from "react-icons/bi";
+import { Divider, Flex, Text, Input, HStack, IconButton, VStack, Link, FormErrorMessage, FormControl, WrapItem, Button, useDisclosure, Tooltip} from '@chakra-ui/react';
+import { BiListPlus, BiSolidEdit, BiX, BiCheckCircle } from "react-icons/bi";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import TodoTask from './TodoTask';
+import AlertDialogComponent from '../AlertDialog';
 
 export default function TodoList({list_id, title, date, onListDelete, expandedList, setExpandedList}) {
   const [taskData, setTaskData] = useState([]);
@@ -101,14 +101,6 @@ export default function TodoList({list_id, title, date, onListDelete, expandedLi
     }
   }
 
-  async function removeList() {
-    try {
-      await axios.delete(`http://localhost:8000/todo/remove_list/${list_id}`);
-      onListDelete();
-    } catch(err) {
-      console.error(`error: ${err.message}`);
-    }
-  }
 
   const DatePickerInput = forwardRef(
     ({value, onClick}, ref) => (
@@ -127,12 +119,11 @@ export default function TodoList({list_id, title, date, onListDelete, expandedLi
         bg="#F8F9FA" _hover={{bg: "#F1F3F5", transition: "ease-in .2s"}}>
         <HStack w="100%" maxH="5rem" h="auto" align="center" justify="start" pos="relative" pl="4">
           <Text maxW="18rem" fontSize="xl" fontWeight="semibold">{title}</Text>
-          <IconButton onClick={() => setCreateNewTask(true)} pos="absolute" right="0" mr="4"><BiListPlus /></IconButton>
         </HStack>
         
         <Divider borderWidth="1px" w="90%" my="2"/>
         <VStack ref={taskListRef} spacing="2" w="100%" py="2" maxH={list_id === expandedList ? "auto" : "21rem"} overflow="hidden">
-          {createNewTask && 
+          {createNewTask ?
             <VStack w="100%" _hover={{cursor: "default"}}>
               <FormControl isInvalid={inputError !== ""}>
                 <Flex p="0" flexDir="row" justify="center">
@@ -159,12 +150,20 @@ export default function TodoList({list_id, title, date, onListDelete, expandedLi
                 <Link onClick={() => {setCreateNewTask(false); setInputError("");}} fontSize="sm" fontWeight="semibold" color="#ADB5BD">Cancel</Link>
               </HStack>
             </VStack>
+            :
+            <Button onClick={() => setCreateNewTask(true)} leftIcon={<BiListPlus />} w="22rem" h="2rem" 
+              bg="#F8F9FA" border="1px solid #CED4DA" boxShadow="md" 
+            >New task</Button>
           }
+
           {(!isOverflowing ? taskData : taskData.slice(0, 5)).map(task => {
             return <TodoTask key={task.todo_id} id={task.todo_id} content={task.description} due_date={task.due_date} 
-            onDelete={() => {setTaskData(prev => prev.filter(t => t.todo_id !== task.todo_id))}}/>
+              onDelete={() => {setTaskData(prev => prev.filter(t => t.todo_id !== task.todo_id))}}/>
           })}
+          
+          
         </VStack>
+
         <HStack px="3" w="100%" mt="auto" justify="space-between" align="center">
           <Link onClick={onOpen} fontSize="sm" fontWeight="semibold" color="#ADB5BD">Remove list</Link>
           {isOverflowing && 
@@ -176,25 +175,7 @@ export default function TodoList({list_id, title, date, onListDelete, expandedLi
         </HStack>    
       </Flex>
     
-      <AlertDialog isOpen={isOpen} onClose={onClose} leastDestructiveRef={cancelRef}>
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="2xl" fontWeight="bold">Remove task list</AlertDialogHeader>
-            <AlertDialogBody>
-              Are you sure? You can't undo this action afterwards.
-            </AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Flex w="100%" flexDir="row" align="center" justify="space-between">
-                <Button onClick={onClose} ref={cancelRef}>Cancel</Button>
-                <Button colorScheme="red" onClick={() => {onClose(); removeList()}}>Delete</Button>
-              </Flex>
-              
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
-
+      <AlertDialogComponent list_id={list_id} onClose={onClose} isOpen={isOpen} cancelRef={cancelRef} onDelete={onListDelete}/>
     </WrapItem>
   );
 }

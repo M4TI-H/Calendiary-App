@@ -7,7 +7,7 @@ import LogoutBtn from './LogoutBtn.jsx';
 export default function Sidebar() {
   
   return(
-    <VStack maxW="12vw" minW="10rem" w="18rem" h="100vh" position="sticky" top="0" bg="#F8F9FA">
+    <VStack maxW="12rem" minW="10rem" w="18rem" h="100vh" position="sticky" top="0" bg="#F8F9FA">
       <HStack w="100%" h="10vh" justifyContent="center">
         <Image src="logo.png" maxH="5rem"/>
         <Text fontSize="lg" fontWeight="semibold" color="#2b2d42">Calendiary</Text>
