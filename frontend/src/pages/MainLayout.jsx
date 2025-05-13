@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Flex, Box, HStack } from '@chakra-ui/react';
+import { Flex, HStack, useBreakpointValue } from '@chakra-ui/react';
 import axios from 'axios';
 import Sidebar from './main/components/sidebar_components/Sidebar';
+import CompactNavigation from './main/components/sidebar_components/CompactNavigation';
 
 export default function MainLayout() {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ export default function MainLayout() {
     email: "",
     name: ""
   });
+  const narrowScreen = useBreakpointValue({base: true, md: false});
   const token = localStorage.getItem("accessToken");
   
   function fetchUserData() {
@@ -36,12 +38,19 @@ export default function MainLayout() {
   }, []);
 
   return (
-    <HStack w="100vw" h="100vh" bg="#2a9d8f" direction="row" justify="space-between" spacing="0"
-    bgImage={{ base: "none", md: "url('background.png')" }}  bgRepeat="no-repeat" bgSize="cover" bgPosition="center" bgAttachment="fixed">
-      <Sidebar />
-      <Flex flex="1" w="100%" h="100%" justifyContent="center">
-        <Outlet context={{ userData }}/>
+    <HStack align="flex-start" w="full" minH="100vh" bg="#2a9d8f" bgImage={{ base: "none", md: "url('background.png')" }} bgRepeat="no-repeat" bgSize="cover" 
+      bgPosition="center" bgAttachment="fixed" spacing="0">
+      {narrowScreen ? 
+      <CompactNavigation narrowScreen={narrowScreen}/>
+      :
+      <>
+      <Sidebar narrowScreen={narrowScreen}/>
+      </>
+      }
+      <Flex flex="1" h="100%" justifyContent="center">
+        <Outlet context={{ userData, narrowScreen }}/>
       </Flex>
+
     </HStack>
   );
 }

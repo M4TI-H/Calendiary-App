@@ -2,7 +2,7 @@ import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, Ale
 import axios from "axios";
 
 export default function AlertDialogComponent({list_id, isOpen, onClose, cancelRef, onDelete}) {
-  
+
   async function removeList() {
     try {
       await axios.delete(`http://localhost:8000/todo/remove_list/${list_id}`);

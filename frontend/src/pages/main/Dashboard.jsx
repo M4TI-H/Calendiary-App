@@ -6,7 +6,7 @@ import axios from "axios";
 import Note from "./components/Note";
 import TodoTask from "./components/todo_components/TodoTask";
 
-export default function Dashboard () {
+export default function Dashboard ({narrowScreen}) {
   const { userData } = useOutletContext();
   const [taskData, setTaskData] = useState([]);
   const [noteData, setNoteData] = useState([]);
@@ -48,81 +48,82 @@ export default function Dashboard () {
   }, []);
 
   return (
-    <VStack w="80vw" h="auto" mt="1rem" bg="#F8F9FA" borderTopRadius="xl" p="2">
-      <Flex w="100%" h="5rem" pl="5" justify="center" flexDir="column">
-        <Heading fontSize="4xl" fontWeight="semibold">Welcome, {userData.name}</Heading>
-        <Text fontSize="xl" ml="1">What are you up to today?</Text>
+    <VStack w="full" minH="100vh" bg="#E9ECEF" pb="20">
+      <Flex maxW="90%" h="5rem" ml={{base: "0", md: "10"}} justify="center" align={{base: "center", md: "unset"}} flexDir="column" mr={{base: "0", md: "auto"}}>
+        <Heading fontSize={{base: "lg", md: "4xl"}} fontWeight="semibold">Welcome, {userData.name}</Heading>
+        <Text fontSize={{base: "md", md: "xl"}} ml="1">What are you up to today?</Text>
       </Flex>
 
-      <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" />
+      <Divider w="full" maxW="95%" borderY="1px solid #ADB5BD" />
 
-      <Flex w="auto" h="auto" flexDir="column" justify="center" pt="2" px="8">
-        <Wrap spacing="8" alignItems="center" justify="center">
+      <Flex w="auto" maxW="80%" h="auto" flexDir="column" justify="center">
+        <Wrap spacing="0" alignItems="center" justify="center">
           <WrapItem>
-            <Flex as={ Link } to="/notes" w="10rem" h="10rem" p="2" flexDir="column" justify="center" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
-            _hover={{bg: "#F1F3F5", cursor: "pointer", transition: "ease-in .2s", transform: "scale(1.05, 1.05)"}}>
+
+            <Flex as={ Link } to="/notes" mx="5" my="3" w={{base: "6rem", md: "10rem"}} h={{base: "6rem", md: "10rem"}} p="2" bg="#F1F3F5" 
+              flexDir="column" justify="center" align="center" 
+              borderRadius="xl" boxShadow="xl"
+              transition= ".2s ease-in-out" _hover={{bg: "rgba(131, 197, 190, 0.5)", cursor: "pointer", transform: "scale(1.05, 1.05)", color: "#006d77"}}>
               <BiNote size="3rem"/>
               <Text textAlign="center" fontSize="sm" fontWeight="semibold">Create a note</Text>
             </Flex>
-          </WrapItem>
-          <WrapItem>
-            <Flex as={ Link } to="/todo" w="10rem" h="10rem" p="2" flexDir="column" justify="center" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
-            _hover={{bg: "#F1F3F5", cursor: "pointer", transition: "ease-in .2s", transform: "scale(1.05, 1.05)"}}>
+
+            <Flex as={ Link } to="/todo" mx="5" my="3" w={{base: "6rem", md: "10rem"}} h={{base: "6rem", md: "10rem"}} p="2" bg="#F1F3F5" 
+              flexDir="column" justify="center" align="center" 
+              borderRadius="xl" boxShadow="xl"
+              transition= ".2s ease-in-out" _hover={{bg: "rgba(131, 197, 190, 0.5)", cursor: "pointer", transform: "scale(1.05, 1.05)", color: "#006d77"}}>
               <BiListUl size="3rem"/>
               <Text textAlign="center" fontSize="sm" fontWeight="semibold">Add new task</Text>
             </Flex>
+
           </WrapItem>
           <WrapItem>
-            <Flex as={ Link } to="/calendar" w="10rem" h="10rem" p="2" flexDir="column" justify="center" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
-            _hover={{bg: "#F1F3F5", cursor: "pointer", transition: "ease-in .2s", transform: "scale(1.05, 1.05)"}}>
+
+            <Flex as={ Link } to="/calendar" mx="5" my="3" w={{base: "6rem", md: "10rem"}} h={{base: "6rem", md: "10rem"}} p="2" bg="#F1F3F5" 
+              flexDir="column" justify="center" align="center" 
+              borderRadius="xl" boxShadow="xl"
+              transition= ".2s ease-in-out" _hover={{bg: "rgba(131, 197, 190, 0.5)", cursor: "pointer", transform: "scale(1.05, 1.05)", color: "#006d77"}}>
               <BiCalendar size="3rem"/>
               <Text textAlign="center" fontSize="sm" fontWeight="semibold">Check my plans</Text>
             </Flex>
-          </WrapItem>
-          <WrapItem>
-            <Flex as={ Link } to="/wellness" w="10rem" h="10rem" p="2" flexDir="column" justify="center" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
-            _hover={{bg: "#F1F3F5", cursor: "pointer", transition: "ease-in .2s", transform: "scale(1.05, 1.05)"}}>
+
+            <Flex as={ Link } to="/wellness" mx="5" my="3" w={{base: "6rem", md: "10rem"}} h={{base: "6rem", md: "10rem"}} p="2" bg="#F1F3F5"
+              flexDir="column" justify="center" align="center" 
+              borderRadius="xl" boxShadow="xl"
+              transition= ".2s ease-in-out" _hover={{bg: "rgba(131, 197, 190, 0.5)", cursor: "pointer", transform: "scale(1.05, 1.05)", color: "#006d77"}}>
               <BiBody size="3rem"/>
               <Text textAlign="center" fontSize="sm" fontWeight="semibold">My well-being</Text>
             </Flex>
+
           </WrapItem>
         </Wrap>
       </Flex>
-
+      <Divider w="full" maxW="95%" borderY="1px solid #ADB5BD" my="5"/>
       {taskData.length > 0 && 
       <>
-        <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" my="5"/>
+      <Heading fontSize="2xl">Tasks for today:</Heading>
+      <VStack spacing="3" my="2">
+        {taskData.map(task => {
+          return <TodoTask key={task.todo_id} id={task.todo_id} content={task.description} due_date={task.due_date} 
+          onDelete={() => {setTaskData(prev => prev.filter(t => t.todo_id !== task.todo_id))}}/>
+        })}
+      </VStack>
 
-        <Flex w="auto" h="auto" flexDir="column" pt="2" px="8" >
-          <Heading fontSize="2xl" pb="4">Tasks for today:</Heading>
-
-          <VStack spacing="2" w="100%" h="auto" py="2">
-            {taskData.map(task => {
-              return <TodoTask key={task.todo_id} id={task.todo_id} content={task.description} due_date={task.due_date} 
-              onDelete={() => {setTaskData(prev => prev.filter(t => t.todo_id !== task.todo_id))}}/>
-            })}
-          </VStack>
-          
-        </Flex>
+      <Divider w="full" maxW="95%" borderY="1px solid #ADB5BD" my="5"/>
       </>
       }
 
-      <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" my="5"/>
-
-      <Flex w="auto" h="auto" flexDir="column" pt="2" px="8">
-        <Heading fontSize="2xl" pb="4">Recent notes:</Heading>
+      <VStack w="auto" maxW="80%" h="auto" my="2">
+        <Heading fontSize="2xl">Recent notes:</Heading>
         <Wrap spacing="8" alignItems="center" justify="center">
           {noteData.map(note => {
-              return (
-              <WrapItem>
-                <Note key={note.note_id} note_id={note.note_id} content={note.content} date={note.create_date} color={"yellow.300"}/>
-              </WrapItem>
-            )})}
-          <WrapItem>
-            <Button as={ Link } to="/notes" bg="#212529" color="#F8F9FA" _hover={{bg: "#343A40"}} pos="absolute">Show all</Button>
-          </WrapItem>
+            return (
+            <WrapItem key={note.note_id}>
+              <Note note_id={note.note_id} content={note.content} date={note.create_date} color={"yellow.300"}/>
+            </WrapItem>
+          )})}
         </Wrap>
-      </Flex>
+      </VStack>
       
     </VStack>
   );

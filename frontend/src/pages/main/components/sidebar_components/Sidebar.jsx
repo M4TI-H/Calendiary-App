@@ -1,23 +1,21 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { Flex, Button, VStack, HStack, Text, Divider, Image } from '@chakra-ui/react';
+import { VStack, HStack, Text, Divider } from '@chakra-ui/react';
 import { BiSolidDashboard, BiListUl, BiNote, BiCalendar, BiBody, BiLogOut, BiCog, BiBookmarks } from "react-icons/bi";
 import SidebarBtn from './SidebarBtn';
 import LogoutBtn from './LogoutBtn.jsx';
 
-export default function Sidebar() {
-  
+export default function Sidebar({narrowScreen}) {
+
   return(
-    <VStack maxW="12rem" minW="10rem" w="18rem" h="100vh" position="sticky" top="0" bg="#F8F9FA">
-      <HStack w="100%" h="10vh" justifyContent="center">
-        <Image src="logo.png" maxH="5rem"/>
+    <VStack maxW="14rem" w={{base: "10rem", lg: "100%"}} minH="100vh" maxH="100%" pos="sticky" top="0" align="flex-start" bg="#F8F9FA">
+      <HStack w="inherit" h="10vh" justifyContent="center">
         <Text fontSize="lg" fontWeight="semibold" color="#2b2d42">Calendiary</Text>
       </HStack>
 
-      <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" />
+      <Divider w="inherit" borderY="1px solid #ADB5BD" />
 
-      <VStack w="100%" spacing={1} alignItems="center">
+      <VStack w="inherit" spacing={1} alignItems="center">
         <Text fontSize="sm" fontWeight="semibold" color="#ADB5BD"
-          left="0" alignSelf="flex-start" ml="2rem">Navigation</Text>
+          alignSelf="flex-start" ml={{base: "1rem", lg: "2rem"}}>Navigation</Text>
         
         <SidebarBtn content={"Dashboard"} icon={<BiSolidDashboard />} link={"/"}/>
         <SidebarBtn content={"Notes"} icon={<BiNote />} link={"/notes"}/>
@@ -26,11 +24,11 @@ export default function Sidebar() {
         <SidebarBtn content={"Wellness Log"} icon={<BiBody />} link={"/wellness"}/>
       </VStack>
 
-      <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" />
+      <Divider w="inherit" borderY="1px solid #ADB5BD" />
 
-      <VStack w="100%" spacing={1} alignItems="center" mt="auto" mb="1rem">
+      <VStack w="inherit" spacing={1} alignItems="center" mt="auto" mb="1rem">
         <Text fontSize="sm" fontWeight="semibold" color="#ADB5BD"
-        left="0" alignSelf="flex-start" ml="2rem">Account</Text>
+          alignSelf="flex-start" ml={{base: "1rem", lg: "2rem"}}>Account</Text>
 
         <SidebarBtn content={"Bookmarks"} icon={<BiBookmarks />} link={"/"}/>
         <SidebarBtn content={"Settings"} icon={<BiCog />} link={"/"}/>

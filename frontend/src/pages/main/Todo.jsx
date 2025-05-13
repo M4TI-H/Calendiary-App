@@ -43,7 +43,7 @@ export default function Todo () {
       const res = await axios.get('http://localhost:8000/main/fetch_bookmarks', {
         headers: { Authorization: `Bearer ${token}` }
       });
-      return res.data.bookmark;
+      setBookmarkData(res.data.bookmark);
     }
     catch (err) {
       console.error(`error: ${err.message}`);
@@ -52,9 +52,15 @@ export default function Todo () {
   
   }
 
+  function getBookmarkName(bookmarkId) {
+  const bookmark = bookmarkData.find(b => b.bookmark_id === bookmarkId);
+  return bookmark ? bookmark.name : "";
+}
+
   useEffect(() => {
     if (token) {
       fetchTodoLists();
+      fetchBookmarks();
     }
     else {
       localStorage.removeItem("accessToken");
@@ -77,10 +83,10 @@ export default function Todo () {
               <TaskListForm formatDate={formatDate} setIsListCreated={setIsListCreated} setTodosData={setTodosData} fetchTodoLists={fetchTodoLists} bookmarkData={bookmarkData}/>
             }
             </WrapItem>
-          
+
           {todosData.map(list => (
             <TodoList key={list.todo_list_id} list_id={list.todo_list_id} title={list.title} expandedList={expandedList} setExpandedList={setExpandedList}
-            date={list.create_date} favorite={list.favorite} bookmark={list.bookmark} onListDelete={() => {setTodosData(prev => prev.filter(l => l.todo_list_id !== list.todo_list_id))}}/>
+            date={list.create_date} favorite={list.favorite} bookmark={getBookmarkName(list.bookmark)} onListDelete={() => {setTodosData(prev => prev.filter(l => l.todo_list_id !== list.todo_list_id))}}/>
           ))}
         </Wrap>
       </HStack>

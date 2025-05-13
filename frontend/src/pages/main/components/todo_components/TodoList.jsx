@@ -7,7 +7,7 @@ import axios from 'axios';
 import TodoTask from './TodoTask';
 import AlertDialogComponent from '../AlertDialog';
 
-export default function TodoList({list_id, title, date, onListDelete, expandedList, setExpandedList}) {
+export default function TodoList({list_id, title, date, bookmark, onListDelete, expandedList, setExpandedList}) {
   const [taskData, setTaskData] = useState([]);
   const [newTaskData, setNewTaskData] = useState({
     description: "",
@@ -117,9 +117,12 @@ export default function TodoList({list_id, title, date, onListDelete, expandedLi
     <WrapItem>
       <Flex w="25rem" minH="30rem" h={list_id === expandedList ? "auto" : "30rem"} p="3"  flexDir="column" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
         bg="#F8F9FA" _hover={{bg: "#F1F3F5", transition: "ease-in .2s"}}>
-        <HStack w="100%" maxH="5rem" h="auto" align="center" justify="start" pos="relative" pl="4">
-          <Text maxW="18rem" fontSize="xl" fontWeight="semibold">{title}</Text>
-        </HStack>
+        <VStack w="100%" maxW="24rem" maxH="15rem" h="auto" align="start">
+          <Text w="100%" fontSize="sm" fontWeight="semibold" color="#ADB5BD">{bookmark}</Text>
+          <Text w="100%" fontSize="xl" fontWeight="semibold">{title}</Text>
+
+        </VStack>
+
         
         <Divider borderWidth="1px" w="90%" my="2"/>
         <VStack ref={taskListRef} spacing="2" w="100%" py="2" maxH={list_id === expandedList ? "auto" : "21rem"} overflow="hidden">
