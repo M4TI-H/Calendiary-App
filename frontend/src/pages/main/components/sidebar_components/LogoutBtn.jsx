@@ -24,8 +24,8 @@ export default function LogoutBtn({ icon, narrowScreen }) {
       >{icon}</IconButton>
     :
     <Button onClick={onOpen}
-      w="95%" h="3rem"
-      justifyContent="flex-start" 
+      w="95%" h="3rem" mt="auto" mb="5"
+      justifyContent="flex-start" pl="8"
       leftIcon={icon} borderRadius="10"  color="#2b2d42"
       bg="none" _hover={{bg: "rgba(193, 18, 31, 0.5)", color: "#780000"}}
     >Log out</Button>

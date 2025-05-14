@@ -48,7 +48,14 @@ export default function Dashboard ({narrowScreen}) {
   }, []);
 
   return (
-    <VStack w="full" minH="100vh" bg="#E9ECEF" pb="20">
+    <VStack w="74rem" maxH="54rem" h="100%" bg="#E9ECEF" pb="20" overflow="auto"
+    sx={{
+      '&::-webkit-scrollbar': { w: "6px" },
+      '&::-webkit-scrollbar-thumb': { backgroundColor: '#6C757D', borderRadius: "full" },
+      '&::-webkit-scrollbar-track': { backgroundColor: "none" }
+    }}
+    >
+
       <Flex maxW="90%" h="5rem" ml={{base: "0", md: "10"}} justify="center" align={{base: "center", md: "unset"}} flexDir="column" mr={{base: "0", md: "auto"}}>
         <Heading fontSize={{base: "lg", md: "4xl"}} fontWeight="semibold">Welcome, {userData.name}</Heading>
         <Text fontSize={{base: "md", md: "xl"}} ml="1">What are you up to today?</Text>
@@ -60,40 +67,36 @@ export default function Dashboard ({narrowScreen}) {
         <Wrap spacing="0" alignItems="center" justify="center">
           <WrapItem>
 
-            <Flex as={ Link } to="/notes" mx="5" my="3" w={{base: "6rem", md: "10rem"}} h={{base: "6rem", md: "10rem"}} p="2" bg="#F1F3F5" 
-              flexDir="column" justify="center" align="center" 
-              borderRadius="xl" boxShadow="xl"
+            <VStack as={ Link } to="/notes" mx="5" my="3" w={{base: "6rem", md: "8rem"}} h={{base: "6rem", md: "8rem"}} p="2" bg="#F1F3F5" 
+              justify="center" spacing="3" borderRadius="xl" boxShadow="xl"
               transition= ".2s ease-in-out" _hover={{bg: "rgba(131, 197, 190, 0.5)", cursor: "pointer", transform: "scale(1.05, 1.05)", color: "#006d77"}}>
-              <BiNote size="3rem"/>
+              <BiNote size="2rem"/>
               <Text textAlign="center" fontSize="sm" fontWeight="semibold">Create a note</Text>
-            </Flex>
+            </VStack>
 
-            <Flex as={ Link } to="/todo" mx="5" my="3" w={{base: "6rem", md: "10rem"}} h={{base: "6rem", md: "10rem"}} p="2" bg="#F1F3F5" 
-              flexDir="column" justify="center" align="center" 
-              borderRadius="xl" boxShadow="xl"
+            <VStack as={ Link } to="/todo" mx="5" my="3" w={{base: "6rem", md: "8rem"}} h={{base: "6rem", md: "8rem"}} p="2" bg="#F1F3F5" 
+              justify="center" spacing="3" borderRadius="xl" boxShadow="xl"
               transition= ".2s ease-in-out" _hover={{bg: "rgba(131, 197, 190, 0.5)", cursor: "pointer", transform: "scale(1.05, 1.05)", color: "#006d77"}}>
-              <BiListUl size="3rem"/>
+              <BiListUl size="2rem"/>
               <Text textAlign="center" fontSize="sm" fontWeight="semibold">Add new task</Text>
-            </Flex>
+            </VStack>
 
           </WrapItem>
           <WrapItem>
 
-            <Flex as={ Link } to="/calendar" mx="5" my="3" w={{base: "6rem", md: "10rem"}} h={{base: "6rem", md: "10rem"}} p="2" bg="#F1F3F5" 
-              flexDir="column" justify="center" align="center" 
-              borderRadius="xl" boxShadow="xl"
+            <VStack as={ Link } to="/calendar" mx="5" my="3" w={{base: "6rem", md: "8rem"}} h={{base: "6rem", md: "8rem"}} p="2" bg="#F1F3F5" 
+              justify="center" spacing="3" borderRadius="xl" boxShadow="xl"
               transition= ".2s ease-in-out" _hover={{bg: "rgba(131, 197, 190, 0.5)", cursor: "pointer", transform: "scale(1.05, 1.05)", color: "#006d77"}}>
-              <BiCalendar size="3rem"/>
+              <BiCalendar size="2rem"/>
               <Text textAlign="center" fontSize="sm" fontWeight="semibold">Check my plans</Text>
-            </Flex>
+            </VStack>
 
-            <Flex as={ Link } to="/wellness" mx="5" my="3" w={{base: "6rem", md: "10rem"}} h={{base: "6rem", md: "10rem"}} p="2" bg="#F1F3F5"
-              flexDir="column" justify="center" align="center" 
-              borderRadius="xl" boxShadow="xl"
+            <VStack as={ Link } to="/wellness" mx="5" my="3" w={{base: "6rem", md: "8rem"}} h={{base: "6rem", md: "8rem"}} p="2" bg="#F1F3F5"
+              justify="center" spacing="3" borderRadius="xl" boxShadow="xl"
               transition= ".2s ease-in-out" _hover={{bg: "rgba(131, 197, 190, 0.5)", cursor: "pointer", transform: "scale(1.05, 1.05)", color: "#006d77"}}>
-              <BiBody size="3rem"/>
+              <BiBody size="2rem"/>
               <Text textAlign="center" fontSize="sm" fontWeight="semibold">My well-being</Text>
-            </Flex>
+            </VStack>
 
           </WrapItem>
         </Wrap>
@@ -102,7 +105,7 @@ export default function Dashboard ({narrowScreen}) {
       {taskData.length > 0 && 
       <>
       <Heading fontSize="2xl">Tasks for today:</Heading>
-      <VStack spacing="3" my="2">
+      <VStack spacing="3" my="2" w="30rem">
         {taskData.map(task => {
           return <TodoTask key={task.todo_id} id={task.todo_id} content={task.description} due_date={task.due_date} 
           onDelete={() => {setTaskData(prev => prev.filter(t => t.todo_id !== task.todo_id))}}/>
@@ -113,7 +116,7 @@ export default function Dashboard ({narrowScreen}) {
       </>
       }
 
-      <VStack w="auto" maxW="80%" h="auto" my="2">
+      <VStack w="100%"  h="auto" my="2">
         <Heading fontSize="2xl">Recent notes:</Heading>
         <Wrap spacing="8" alignItems="center" justify="center">
           {noteData.map(note => {

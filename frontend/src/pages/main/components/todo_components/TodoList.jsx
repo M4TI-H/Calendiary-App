@@ -115,8 +115,11 @@ export default function TodoList({list_id, title, date, bookmark, onListDelete, 
 
   return(
     <WrapItem>
-      <Flex w="25rem" minH="30rem" h={list_id === expandedList ? "auto" : "30rem"} p="3"  flexDir="column" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
-        bg="#F8F9FA" _hover={{bg: "#F1F3F5", transition: "ease-in .2s"}}>
+      <Flex w="20rem"  h={list_id === expandedList ? "auto" : "30rem"} minH="30rem" 
+        p="3" flexDir="column" align="center"
+        borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
+        bg="#F8F9FA" _hover={{bg: "#F1F3F5", transition: "ease-in .2s"}}
+      >
         <VStack w="100%" maxW="24rem" maxH="15rem" h="auto" align="start">
           <Text w="100%" fontSize="sm" fontWeight="semibold" color="#ADB5BD">{bookmark}</Text>
           <Text w="100%" fontSize="xl" fontWeight="semibold">{title}</Text>
@@ -154,7 +157,7 @@ export default function TodoList({list_id, title, date, bookmark, onListDelete, 
               </HStack>
             </VStack>
             :
-            <Button onClick={() => setCreateNewTask(true)} leftIcon={<BiListPlus />} w="22rem" h="2rem" 
+            <Button onClick={() => setCreateNewTask(true)} leftIcon={<BiListPlus />} w="80%" h="2rem" 
               bg="#F8F9FA" border="1px solid #CED4DA" boxShadow="md" 
             >New task</Button>
           }

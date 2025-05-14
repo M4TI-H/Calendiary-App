@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Flex, Text, Link, Tooltip, IconButton, Input, VStack, HStack, Textarea } from '@chakra-ui/react';
-import { BiCheckCircle, BiCircle, BiTrash, BiSolidEdit  } from "react-icons/bi";
+import { BiCheck, BiCircle, BiTrash  } from "react-icons/bi";
 import axios from 'axios';
 
 export default function TodoTask({id, content, due_date, onDelete}) {
@@ -72,14 +72,17 @@ export default function TodoTask({id, content, due_date, onDelete}) {
   }
 
   return(
-      <Flex flexDir="column" w="22rem" minH={due_date && isDoubleClicked ? "4rem" : "3rem"} maxH="10rem" h="auto" py="2" px="2" borderRadius="lg" boxShadow="md" 
-        border="1px #CED4DA" bg={isTaskDone ? "#CED4DA" : "#F8F9FA"} pos="relative">
+      <Flex w="100%" h="auto" minH={due_date && isDoubleClicked ? "4rem" : "3rem"} maxH="10rem"
+        py="2" px="2" flexDir="column" pos="relative"
+        borderRadius="lg" boxShadow="md" 
+        border="1px #CED4DA" bg={isTaskDone ? "#CED4DA" : "#F8F9FA"} 
+      >
         <HStack my="auto">
           {!isDoubleClicked &&
           (<Tooltip label="Change task status" openDelay="700" bg="#F8F9FA" borderWidth="1px" borderColor="#CED4DA" color="#2b2d42" borderRadius="md" placement="left">
             <Flex onClick={() => setTaskStatus()} h="1.5rem" w="1.5rem" borderRadius="full" bg="#83c5be" _hover={{bg: "#6FA8A3", cursor: "pointer"}} my="auto">
               {isTaskDone ? 
-              <BiCheckCircle size="100%" color="#006d77"/>
+              <BiCheck size="100%" color="#006d77"/>
               :
               <BiCircle size="100%" color="#006d77"/>
               }

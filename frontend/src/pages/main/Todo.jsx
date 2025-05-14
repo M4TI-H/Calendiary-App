@@ -69,21 +69,23 @@ export default function Todo () {
   }, []);
 
   return (
-    <VStack w="80vw" h="auto" mt="8" bg="#F8F9FA" borderTopRadius="xl" p="2">
+    <VStack w="74rem" maxH="54rem" h="100%" bg="#E9ECEF" pb="20" overflow="auto"
+      sx={{
+        '&::-webkit-scrollbar': { w: "6px" },
+        '&::-webkit-scrollbar-thumb': { backgroundColor: '#6C757D', borderRadius: "full" },
+        '&::-webkit-scrollbar-track': { backgroundColor: "none" }
+      }}
+    >
       <Heading py="3">Your to-dos</Heading>
+      <Divider w="full" maxW="95%" borderY="1px solid #ADB5BD" />
 
-      <Divider w="100%" borderTopWidth="2px" mb="5"/>
-
-      <HStack>
+      <HStack h="auto">
         <Wrap spacing="5" align="center" justify="center">
-            <WrapItem>
-            {!isListCreated ?
-              <AddTaskList setIsListCreated={setIsListCreated} fetchBookmarks={fetchBookmarks} setBookmarkData={setBookmarkData}/>
-            :
-              <TaskListForm formatDate={formatDate} setIsListCreated={setIsListCreated} setTodosData={setTodosData} fetchTodoLists={fetchTodoLists} bookmarkData={bookmarkData}/>
-            }
-            </WrapItem>
-
+          {!isListCreated ?
+            <AddTaskList setIsListCreated={setIsListCreated} fetchBookmarks={fetchBookmarks} setBookmarkData={setBookmarkData}/>
+          :
+            <TaskListForm formatDate={formatDate} setIsListCreated={setIsListCreated} setTodosData={setTodosData} fetchTodoLists={fetchTodoLists} bookmarkData={bookmarkData}/>
+          }
           {todosData.map(list => (
             <TodoList key={list.todo_list_id} list_id={list.todo_list_id} title={list.title} expandedList={expandedList} setExpandedList={setExpandedList}
             date={list.create_date} favorite={list.favorite} bookmark={getBookmarkName(list.bookmark)} onListDelete={() => {setTodosData(prev => prev.filter(l => l.todo_list_id !== list.todo_list_id))}}/>

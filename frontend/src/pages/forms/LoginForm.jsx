@@ -95,9 +95,8 @@ export default function LoginForm () {
           <Input onChange={e => setLoginData({...loginData, password: e.target.value})} value={loginData.password} type={visibility ? 'text' : 'password'}
            w="100%" minH="2.5rem" maxH="3rem" h={{ base: "3rem", sm: "auto" }} maxLength="32"
             bg="#DEE2E6" variant="filled" _hover={{ bg: "#CED4DA" }} _focus={{bg: "#CED4DA", border: "thin solid #ADB5BD"}}/>
-          <InputRightElement width="4.5rem">
-            
-            <IconButton w="2rem" size="sm" onClick={handleVisibility}>
+          <InputRightElement>
+            <IconButton h="100%" bg="none" _hover={{cursor: "pointer"}} _active={{bg: "none"}} onClick={handleVisibility}>
               {visibility ? <TbEye /> : <TbEyeClosed />}
             </IconButton>
           </InputRightElement>
