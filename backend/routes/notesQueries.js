@@ -16,7 +16,7 @@ router.get("/fetch_notes", async (req, res) => {
     const decodedData = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
     const email = decodedData.email;
 
-    const [data] = await db.query("SELECT note_id, content, create_date, bookmark FROM user, notes WHERE id = user_id AND email = ? ORDER BY create_date DESC", [email]);
+    const [data] = await db.query("SELECT note_id, content, create_date, bookmark, color FROM user, notes WHERE id = user_id AND email = ? ORDER BY create_date DESC", [email]);
 
     return res.status(200).json({
       status: "Data has been fetched.",
@@ -51,7 +51,7 @@ router.get("/fetch_recent_notes", async (req, res) => {
     const decodedData = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
     const email = decodedData.email;
 
-    const [data] = await db.query("SELECT note_id, content, create_date, bookmark FROM user, notes WHERE id = user_id AND email = ? ORDER BY create_date DESC LIMIT 3", [email]);
+    const [data] = await db.query("SELECT note_id, content, create_date, bookmark, color FROM user, notes WHERE id = user_id AND email = ? ORDER BY create_date DESC LIMIT 3", [email]);
 
     return res.status(200).json({
       status: "Data has been fetched.",
@@ -95,8 +95,11 @@ router.post("/add_note", async (req, res) => {
     const user_id = data[0].id;
     const { content, dateNow } = req.body;
 
-    const values = [user_id, content, dateNow, null];
-    const [result] = await db.query(`INSERT INTO notes (user_id, content, create_date, bookmark) VALUES (?)`, [values]);
+    const colors = ["#2A9D8F", "#E9C46A", "#F4A261", "#E76F51", "#669BBC", "#9d4edd", "#5a189a", "#ec0868"];
+    let color = colors[Math.floor(Math.random() * colors.length)];
+
+    const values = [user_id, content, dateNow, null, color];
+    const [result] = await db.query(`INSERT INTO notes (user_id, content, create_date, bookmark, color) VALUES (?)`, [values]);
   
     const [newNote] = await db.query(`SELECT * FROM notes WHERE note_id = ?`, [result.insertId]);
     return res.status(200).json({ status: "Note created", note: newNote[0] });

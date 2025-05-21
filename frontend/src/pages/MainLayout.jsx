@@ -38,37 +38,34 @@ export default function MainLayout() {
   }, []);
 
   return (
-    <HStack  w="full" h="100vh" bg="#2a9d8f" bgImage={{ base: "none", md: "url('background.png')" }} bgRepeat="no-repeat" bgSize="cover" 
-      bgPosition="center" bgAttachment="fixed" spacing="0" justify="center" align="center" overflow="hidden">
+    <HStack w="full" h="100vh" bg="#d5bdaf" spacing="0" justify="center" align="center" overflow="hidden">
       {narrowScreen ? 
       <CompactNavigation narrowScreen={narrowScreen}/>
       :
-      <>
       <Sidebar narrowScreen={narrowScreen}/>
-      </>
       }
       <Outlet context={{ userData, narrowScreen }}/>
 
       <VStack maxW="18rem" maxH="54rem" w={{base: "10rem", lg: "100%"}} h="100%" 
         align="flex-start" p="5"
-        bg="#DEE2E6" borderRightRadius="3xl">
+        bg="#F8F9FA" borderRightRadius="3xl" filter="auto" brightness="95%">
         <Text fontSize="xl" fontWeight="bold" color="#212529">Calendar</Text>
         
         <Divider w="100%" borderY="1px solid #ADB5BD"/>
         <VStack w="100%" h="8rem">
           <HStack justify="space-between" w="100%" align="end">
             <Text fontSize="lg" fontWeight="semibold" color="#212529">Today</Text>
-            <Text fontSize="sm" fontWeight="semibold" color="#ADB5BD">May 14, 2025</Text>
+            <Text fontSize="sm" fontWeight="medium" color="#ADB5BD">May 14, 2025</Text>
           </HStack>
-          <Text fontSize="sm" fontWeight="semibold" color="#ADB5BD">No tasks for today!</Text>
+          <Text fontSize="sm" color="#ADB5BD">No tasks for today!</Text>
         </VStack>
 
         <VStack w="100%" h="8rem">
           <HStack justify="space-between" w="100%" align="end">
             <Text fontSize="lg" fontWeight="semibold" color="#212529">Thursday</Text>
-            <Text fontSize="sm" fontWeight="semibold" color="#ADB5BD">May 15, 2025</Text>
+            <Text fontSize="sm" fontWeight="medium" color="#ADB5BD">May 15, 2025</Text>
           </HStack>
-          <Text fontSize="sm" fontWeight="semibold" color="#ADB5BD">No tasks for Thursday!</Text>
+          <Text fontSize="sm"  color="#ADB5BD">No tasks for Thursday!</Text>
         </VStack>
       </VStack>
 

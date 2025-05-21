@@ -69,8 +69,8 @@ export default function Todo () {
   }, []);
 
   return (
-    <VStack w="74rem" maxH="54rem" h="100%" bg="#E9ECEF" pb="20" overflow="auto"
-      sx={{
+    <VStack w="74rem" maxH="54rem" h="100%" bg="#F8F9FA" pb="20" 
+      overflow="auto" sx={{
         '&::-webkit-scrollbar': { w: "6px" },
         '&::-webkit-scrollbar-thumb': { backgroundColor: '#6C757D', borderRadius: "full" },
         '&::-webkit-scrollbar-track': { backgroundColor: "none" }
@@ -79,8 +79,8 @@ export default function Todo () {
       <Heading py="3">Your to-dos</Heading>
       <Divider w="full" maxW="95%" borderY="1px solid #ADB5BD" />
 
-      <HStack h="auto">
-        <Wrap spacing="5" align="center" justify="center">
+      <HStack>
+        <Wrap spacing="5" align="flex-start" justify="center">
           {!isListCreated ?
             <AddTaskList setIsListCreated={setIsListCreated} fetchBookmarks={fetchBookmarks} setBookmarkData={setBookmarkData}/>
           :

@@ -35,15 +35,16 @@ export default function Note({ id, content, date, color, onNoteDelete }) {
   }
 
   return(
-    <VStack onDoubleClick={isNoteEdited ? null : () => setIsNodeEdited(true)} w="20rem" h="20rem" flexDir="column" align="flex-start" p="5" borderRadius="2xl"
-      bg={color} _hover={{bg: "yellow.400", cursor: "pointer", transition: "ease-in .1s"}} boxShadow="lg">
+    <VStack onDoubleClick={isNoteEdited ? null : () => setIsNodeEdited(true)} w="18rem" h="20rem" 
+      flexDir="column" align="flex-start" p="5" pb="2" borderRadius="2xl"
+      bg={color} _hover={{filter: "brightness(90%)", cursor: "pointer", transition: "ease-in .1s"}} boxShadow="lg">
       {!isNoteEdited ? 
       ( 
         <VStack h="100%" w="100%" align="flex-start">
-          <Text minH="15rem" fontSize="md" fontWeight="semibold" mx="2" color="#2b2d42">{displayedContent}</Text>
+          <Text minH="15rem" fontSize="sm" fontWeight="medium" mx="2" color="#2b2d42">{displayedContent}</Text>
           <HStack w="100%" h="2rem" justify="space-between" mt="auto">
-            <Link onClick={onOpen} fontSize="sm" fontWeight="semibold" color="#ADB5BD">Remove note</Link>
-            <Text fontSize="sm" color="#ADB5BD">{date}</Text>
+            <Link onClick={onOpen} fontSize="xs" color="#ADB5BD">Delete</Link>
+            <Text fontSize="xs" color="#ADB5BD">{date}</Text>
           </HStack>
         </VStack>
        ) : (

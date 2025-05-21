@@ -39,10 +39,12 @@ export default function TaskListForm({formatDate, setIsListCreated, setTodosData
 
   return (
     <WrapItem>
-      <Flex w="20rem" h="30rem" p="3" flexDir="column" align="center" borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
-        bg="#F8F9FA" _hover={{bg: "#F1F3F5", cursor: "pointer", transition: "ease-in .2s"}}>
+      <Flex w="20rem" h="30rem" p="3" 
+      flexDir="column" align="center" 
+        borderRadius="xl" boxShadow="xl" border="2px solid #E9ECEF" bg="#F8F9FA" 
+        _hover={{bg: "#F1F3F5", cursor: "pointer", transition: "ease-in .2s"}}>
         
-        <Textarea onChange={e => setListTitle(e.target.value)} w="100%" h="8rem" resize="none"  maxLength="60" p="2" fontSize="lg" fontWeight="semibold"
+        <Textarea onChange={e => setListTitle(e.target.value)} w="100%" h="8rem" resize="none" maxLength="60" p="2" fontSize="md" fontWeight="medium"
           placeholder="Give your list a title!" borderRadius="lg" _hover={{boxShadow: "0 0 0 1px #248277"}}  _focus={{ boxShadow: "0 0 0 2px #248277"}} border="none"
         />
 
@@ -50,7 +52,7 @@ export default function TaskListForm({formatDate, setIsListCreated, setTodosData
 
         <Text fontSize="sm" fontWeight="semibold" color="#ADB5BD" mb="2">Bookmarks</Text>
 
-        <Wrap maxH="10rem" w="80%" justify="center">
+        <Wrap maxH="10rem" w="100%" justify="center">
           {bookmarkData.map(bookmark => {
             return (
             <WrapItem key={bookmark.bookmark_id}>
@@ -62,11 +64,11 @@ export default function TaskListForm({formatDate, setIsListCreated, setTodosData
           })}
         </Wrap>
         
-        <Button onClick={addTaskList} mt="auto" mb="3" fontSize="md" minW="10rem" maxW="14rem" minH="2em" maxH="3rem"
-            w={{ base: "30vw", sm: "auto" }} h={{ base: "5vh", sm: "4vh" }}
+        <Button onClick={addTaskList} mt="auto" mb="3" minW="8rem" maxW="14rem" minH="2rem" maxH="3rem"
+            w={{ base: "10rem", sm: "auto" }} h={{base: "3rem", sm: "2rem"}}
             bg="#248277" color="#F8F9FA" _hover={{ bg: "#14746f" }}
           >Submit</Button>
-        <Link onClick={() => setIsListCreated(false)} fontSize="sm" fontWeight="semibold" color="#ADB5BD">Cancel</Link>
+        <Link onClick={() => setIsListCreated(false)} fontSize={{base: "md", sm: "xs"}} color="#ADB5BD">Cancel</Link>
       </Flex>
     </WrapItem>
    

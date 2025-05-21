@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Flex, VStack, Heading, Text, HStack, Wrap, WrapItem, Divider, Textarea, Link, Button } from "@chakra-ui/react";
+import { Flex, VStack, Heading, HStack, Wrap, WrapItem, Divider, Textarea, Link, Button } from "@chakra-ui/react";
+import { BiPlus } from "react-icons/bi"
 import axios from "axios";
 import Note from "./components/Note";
 
@@ -74,44 +75,56 @@ export default function Notes () {
   }, []);
 
   return (
-    <VStack w="80vw" h="auto" mt="1rem" bg="#F8F9FA" borderTopRadius="xl" p="2">
+    <VStack w="70rem" h="54rem" bg="#F8F9FA">
       <Heading py="3">Your notes</Heading>
 
       <Divider w="100%" color="#ADB5BD" borderTopWidth="1px" mb="5"/>
 
-      <HStack>
+      <HStack h="auto">
          <Wrap spacing="5" justify="center" align="center">
           {isNoteCreated ? 
           <WrapItem>
-            <VStack w="20rem" h="20rem" flexDir="column" align="flex-start" p="5" borderRadius="2xl"
-              bg="yellow.300" _hover={{bg: "yellow.400", cursor: "pointer", transition: "ease-in .1s"}} boxShadow="lg">
-              <Textarea onChange={(e) => setContent(e.target.value)} px="2" py="0" minH="15rem" fontWeight="semibold" resize="none" variant="unstyled" 
-                overflow="hidden" placeholder="What are you thinking about?"/>
+
+            <VStack w="18rem" h="20rem"
+              flexDir="column" align="flex-start" p="5" 
+              borderRadius="2xl" border="3px dashed #212529" bg="none" boxShadow="lg"
+              _hover={{transition: "ease-in .1s"}}
+            >
+              <Textarea onChange={(e) => setContent(e.target.value)} px="2" py="0" minH="15rem" 
+                fontWeight="semibold" resize="none" variant="unstyled" 
+                placeholder="What are you thinking about?"
+                overflow="auto" sx={{
+                  '&::-webkit-scrollbar': { w: "4px" },
+                  '&::-webkit-scrollbar-thumb': { backgroundColor: '#6C757D', borderRadius: "full" },
+                  '&::-webkit-scrollbar-track': { backgroundColor: "none" }
+                }}
+              />
+              
               <HStack w="100%" h="2rem"justify="space-between" mt="auto">
-                <Link onClick={() => {setIsNoteCreated(false); setContent("")}} fontSize="sm" fontWeight="semibold" color="#ADB5BD">Cancel</Link>
-                <Button onClick={() => {addNote(); setIsNoteCreated(false);}} w="5rem" h="2rem">Create</Button>
+                <Link onClick={() => {setIsNoteCreated(false); setContent("")}} fontSize="xs" color="#ADB5BD">Cancel</Link>
+                <Button onClick={() => {addNote(); setIsNoteCreated(false);}} w="5rem" h="2rem" fontSize="xs" >Create</Button>
               </HStack>
+
             </VStack>
+
           </WrapItem>
           :
           <WrapItem>
-            <Flex onClick={() => setIsNoteCreated(true)} w="10rem" h="10rem" p="2" flexDir="column" justify="center" align="center" borderRadius="xl" boxShadow="xl" 
-              borderWidth="3px" borderStyle="dashed" borderColor="#2b2d42" bg="#F8F9FA" _hover={{bg: "#F1F3F5", cursor: "pointer", transition: "ease-in .2s", 
-              transform: "scale(1.05, 1.05)"}}>
-              <Text color="#2b2d42" textAlign="center" fontSize="sm" fontWeight="semibold">Add new note</Text>
+            <Flex onClick={() => setIsNoteCreated(true)} w="10rem" h="10rem" 
+              p="2" flexDir="column" justify="center" align="center" 
+              borderRadius="2xl" boxShadow="xl" border="3px dashed #2b2d42" 
+              _hover={{bg: "#F1F3F5", cursor: "pointer", transition: "ease-in .2s", transform: "scale(1.05)"}}>
+              <BiPlus size="30%" color="#212529"/>
             </Flex>
           </WrapItem>
           }
           {noteData.map(note => (
             <WrapItem key={note.note_id}>
-              <Note id={note.note_id} content={note.content} date={note.create_date} color={"yellow.300"} onNoteDelete={() => {setNoteData(prev => prev.filter(n => n.note_id !== note.note_id))}}/>
+              <Note id={note.note_id} content={note.content} date={note.create_date} color={note.color} onNoteDelete={() => {setNoteData(prev => prev.filter(n => n.note_id !== note.note_id))}}/>
             </WrapItem>
           ))}
          </Wrap>
       </HStack>
-      <Flex>
-        
-      </Flex>
     </VStack>
   );
 }

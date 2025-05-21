@@ -1,5 +1,5 @@
 import { useState, useEffect, forwardRef, useRef } from 'react';
-import { Divider, Flex, Text, Input, HStack, IconButton, VStack, Link, FormErrorMessage, FormControl, WrapItem, Button, useDisclosure, Tooltip} from '@chakra-ui/react';
+import { Divider, Flex, Text, Input, HStack, IconButton, VStack, Link, FormErrorMessage, FormControl, WrapItem, Button, useDisclosure, Box} from '@chakra-ui/react';
 import { BiListPlus, BiSolidEdit, BiX, BiCheckCircle } from "react-icons/bi";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -56,12 +56,25 @@ export default function TodoList({list_id, title, date, bookmark, onListDelete, 
       localStorage.removeItem("accessToken");
       navigate("/login");
     }
-
-    if (list_id !== expandedList && taskListRef.current) {
-      const isOverflow = taskListRef.current.scrollHeight > taskListRef.current.clientHeight;
-      setIsOverflowing(isOverflow);
-    }
   }, []);
+
+  useEffect(() => {
+    const element = taskListRef.current;
+
+    if (!element || list_id === expandedList) return;
+
+    const observer = new ResizeObserver(() => {
+      const scrollHeight = element.scrollHeight;
+      const clientHeight = element.clientHeight;
+      setIsOverflowing(scrollHeight > clientHeight);
+    });
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [expandedList, taskData.length])
 
   async function addTask(newTaskData) {
     try {
@@ -105,7 +118,7 @@ export default function TodoList({list_id, title, date, bookmark, onListDelete, 
   const DatePickerInput = forwardRef(
     ({value, onClick}, ref) => (
       <Flex align="center">
-        <Link ref={ref} onClick={onClick} fontSize="sm" fontWeight="semibold" color="#ADB5BD">
+        <Link ref={ref} onClick={onClick} fontSize="xs" color="#ADB5BD">
           {newTaskData.due_date ? `Due: ${formatDate(newTaskData.due_date)}` : "Select due date"}
         </Link>
         {value && <BiX onClick={() => setNewTaskData({ ...newTaskData, due_date: "" })} color="#ADB5BD" size="1rem" style={{cursor: "pointer"}}/>}
@@ -116,26 +129,25 @@ export default function TodoList({list_id, title, date, bookmark, onListDelete, 
   return(
     <WrapItem>
       <Flex w="20rem"  h={list_id === expandedList ? "auto" : "30rem"} minH="30rem" 
-        p="3" flexDir="column" align="center"
+        p="3" flexDir="column" align="center" pos="relative" 
         borderRadius="xl" boxShadow="xl" border="2px" borderColor="#E9ECEF"
         bg="#F8F9FA" _hover={{bg: "#F1F3F5", transition: "ease-in .2s"}}
       >
-        <VStack w="100%" maxW="24rem" maxH="15rem" h="auto" align="start">
-          <Text w="100%" fontSize="sm" fontWeight="semibold" color="#ADB5BD">{bookmark}</Text>
-          <Text w="100%" fontSize="xl" fontWeight="semibold">{title}</Text>
-
+        <VStack w="100%" maxW="24rem" maxH="15rem" h="auto" align="start" spacing="0">
+          <Text w="100%" fontSize="xs" color="#ADB5BD">{bookmark}</Text>
+          <Text w="100%" fontSize="md" fontWeight="semibold">{title}</Text>
         </VStack>
-
         
         <Divider borderWidth="1px" w="90%" my="2"/>
-        <VStack ref={taskListRef} spacing="2" w="100%" py="2" maxH={list_id === expandedList ? "auto" : "21rem"} overflow="hidden">
+        <VStack ref={taskListRef} spacing="2" w="100%" py="2" maxH={list_id === expandedList ? "none" : "20rem"} overflow="hidden">
           {createNewTask ?
             <VStack w="100%" _hover={{cursor: "default"}}>
               <FormControl isInvalid={inputError !== ""}>
                 <Flex p="0" flexDir="row" justify="center">
-                  <Input w="19rem" h="3rem" placeholder="Type your task here" onChange={e => setNewTaskData({...newTaskData, description: e.target.value})} 
-                    borderColor="#248277" borderWidth="2px" borderRadius="lg" bg="#F8F9FA" _focusVisible="false" _hover="none" borderRightRadius="none"
-                    maxLength="100"
+                  <Input w="19rem" h="3rem" onChange={e => setNewTaskData({...newTaskData, description: e.target.value})} 
+                    maxLength="100" placeholder="Type your task here" fontSize="sm"
+                    borderColor="#248277" borderWidth="2px" borderRadius="lg" borderRightRadius="none" bg="#F8F9FA" 
+                    _focusVisible="false" _hover="none"
                   />
 
                   <IconButton onClick={() => addTask(newTaskData)} h="3rem" w="3rem" bg="#248277" _hover={{bg: "#14746f"}} 
@@ -153,31 +165,28 @@ export default function TodoList({list_id, title, date, bookmark, onListDelete, 
                   }}
                   customInput={<DatePickerInput/>}
                 />
-                <Link onClick={() => {setCreateNewTask(false); setInputError("");}} fontSize="sm" fontWeight="semibold" color="#ADB5BD">Cancel</Link>
+                <Link onClick={() => {setCreateNewTask(false); setInputError("");}} variant="textButton">Cancel</Link>
               </HStack>
             </VStack>
             :
-            <Button onClick={() => setCreateNewTask(true)} leftIcon={<BiListPlus />} w="80%" h="2rem" 
-              bg="#F8F9FA" border="1px solid #CED4DA" boxShadow="md" 
+            <Button onClick={() => setCreateNewTask(true)} leftIcon={<BiListPlus />} w="80%" minH="2rem" maxH="2rem"
+              bg="#F8F9FA" border="1px solid #CED4DA" boxShadow="md" fontSize="sm"
             >New task</Button>
           }
 
-          {(!isOverflowing ? taskData : taskData.slice(0, 5)).map(task => {
+          {(list_id === expandedList || !isOverflowing ? taskData : taskData.slice(0, 5)).map(task => {
             return <TodoTask key={task.todo_id} id={task.todo_id} content={task.description} due_date={task.due_date} 
               onDelete={() => {setTaskData(prev => prev.filter(t => t.todo_id !== task.todo_id))}}/>
           })}
-          
-          
         </VStack>
-
-        <HStack px="3" w="100%" mt="auto" justify="space-between" align="center">
-          <Link onClick={onOpen} fontSize="sm" fontWeight="semibold" color="#ADB5BD">Remove list</Link>
-          {isOverflowing && 
-            <Link onClick={() => setExpandedList(list_id === expandedList ? null : list_id)} fontSize="sm" fontWeight="semibold" color="#ADB5BD">
-              {list_id === expandedList ? "Hide" : "Show all"}
-            </Link>
+        {isOverflowing &&
+          <Link onClick={() => setExpandedList(list_id === expandedList ? null : list_id)} py="2" variant="textButton">
+            {list_id === expandedList ? "Hide" : "Show all"}
+          </Link>
           }
-          <Text fontSize="sm" color="#ADB5BD">{date}</Text>
+        <HStack px="3" w="100%" mt="auto" justify="space-between" align="center">
+          <Link onClick={onOpen} fontSize="xs" color="#ADB5BD">Delete</Link>
+          <Text variant="helperText">{date}</Text>
         </HStack>    
       </Flex>
     

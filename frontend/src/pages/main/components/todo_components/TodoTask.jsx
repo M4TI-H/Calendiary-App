@@ -72,7 +72,7 @@ export default function TodoTask({id, content, due_date, onDelete}) {
   }
 
   return(
-      <Flex w="100%" h="auto" minH={due_date && isDoubleClicked ? "4rem" : "3rem"} maxH="10rem"
+      <Flex w="100%"
         py="2" px="2" flexDir="column" pos="relative"
         borderRadius="lg" boxShadow="md" 
         border="1px #CED4DA" bg={isTaskDone ? "#CED4DA" : "#F8F9FA"} 
@@ -97,23 +97,22 @@ export default function TodoTask({id, content, due_date, onDelete}) {
             </Flex>
             :
             <Text maxW="14rem" onDoubleClick={textDoubleClick} my="auto" ml="3" mr="2" decoration={isTaskDone ? "line-through" : "none"} 
-            color={isTaskDone ? "#ADB5BD" : "#2b2d42"} fontWeight="semibold" _hover={{cursor: "default"}}>
+            color={isTaskDone ? "#ADB5BD" : "#2b2d42"} fontSize="md" _hover={{cursor: "default"}}>
               {displayedText}</Text>
 
           }
           {!isDoubleClicked && (
-            isTaskDone && (
+            isTaskDone && 
               <IconButton h="2rem" w="2rem" onClick={deleteTask} bg="none" _hover={{ bg: "rgba(193, 18, 31, 0.5)" }} my="auto" ml="auto" borderRadius="lg"> 
                 <BiTrash size="1.4rem" color="#780000"/>
               </IconButton>
-            )
           )}
         </HStack>
 
         <HStack display={isDoubleClicked || (!isTaskDone && due_date) ? "flex" : "none"} justify="space-between" mt="1" px="2" w="100%" right="0" bottom="0">
-          {isDoubleClicked && <Link onClick={() => setIsDoubleClicked(false)} fontSize="sm" fontWeight="semibold" color="#ADB5BD">Cancel</Link>}
-          {isDoubleClicked && <Link onClick={submitTextChange} fontSize="sm" fontWeight="semibold" color="#ADB5BD">Confirm change</Link>}
-          {!isDoubleClicked && due_date && !isTaskDone && <Text color={new Date(dateNow) < new Date(dueDate) ? "#ADB5BD" : "#ef233c"} ml="auto" fontSize="sm">Due: {dueDate}</Text>}
+          {isDoubleClicked && <Link onClick={() => setIsDoubleClicked(false)} variant="textButton">Cancel</Link>}
+          {isDoubleClicked && <Link onClick={submitTextChange} variant="textButton">Confirm change</Link>}
+          {!isDoubleClicked && due_date && !isTaskDone && <Text color={new Date(dateNow) < new Date(dueDate) ? "#ADB5BD" : "#ef233c"} ml="auto" fontSize="xs">Due: {dueDate}</Text>}
         </HStack>
         
       </Flex>

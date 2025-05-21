@@ -13,8 +13,8 @@ export default function SidebarBtn({content, icon, link, narrowScreen}) {
       >{icon}</IconButton>
       :
       <Button as={Link} to={link}  
-        w="95%" h="3rem"
-        justifyContent="flex-start" pl="8"
+        w="95%" h="3rem" fontSize={{base: "0.25rem", sm: "0.8rem"}}
+        justifyContent="flex-start" pl="4"
         leftIcon={icon} borderRadius="10" color="#2b2d42"
         bg="none" _hover={{bg: "rgba(131, 197, 190, 0.5)", color: "#006d77"}} 
       >{content}</Button>

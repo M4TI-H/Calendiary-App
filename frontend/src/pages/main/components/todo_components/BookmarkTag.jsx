@@ -17,9 +17,10 @@ export default function BookmarkTag({id, name, color, icon, setSelectedBookmark,
   }
 
   return(
-    <Tag h="7" onClick={() => selectBookmark(id)} colorScheme="black" bg={isSelected && tagSelected && color} border="2px solid" borderColor={color}>
+    <Tag  h="7" onClick={() => selectBookmark(id)} display="flex" justifyContent="center"
+      bg={isSelected && tagSelected && color} border="2px solid" borderColor={color}>
       <TagLeftIcon color={isSelected && tagSelected ? "#FFF" : color} as={IconComponent}/>
-      <TagLabel color={isSelected && tagSelected ? "#FFF" : color}>{name}</TagLabel>
+      <TagLabel color={isSelected && tagSelected ? "#FFF" : color} fontSize="xs" fontWeight="medium">{name}</TagLabel>
     </Tag>
   );
 }
