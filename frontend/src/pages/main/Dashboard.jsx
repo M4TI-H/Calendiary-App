@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useOutletContext, Link } from "react-router-dom";
-import { Flex, Text, VStack,Divider, Wrap, WrapItem, Heading, Button } from "@chakra-ui/react";
+import { Flex, Text, VStack,Divider, Wrap, WrapItem, Heading, Button, HStack } from "@chakra-ui/react";
 import { BiListUl, BiNote, BiCalendar, BiBody } from "react-icons/bi";
 import axios from "axios";
 import Note from "./components/Note";
@@ -48,19 +48,44 @@ export default function Dashboard ({narrowScreen}) {
   }, []);
 
   return (
-    <VStack w="74rem" maxH="54rem" h="100%" bg="#F8F9FA" pb="20" overflow="auto"
+    <VStack maxW="74rem" w="full" h={narrowScreen ? "100vh" : "54rem"} bg="#F8F9FA" overflowY="auto"
     sx={{
       '&::-webkit-scrollbar': { w: "6px" },
       '&::-webkit-scrollbar-thumb': { backgroundColor: '#6C757D', borderRadius: "full" },
       '&::-webkit-scrollbar-track': { backgroundColor: "none" }
     }}
     >
-
-      <Flex maxW="90%" h="5rem" ml={{base: "0", md: "10"}} justify="center" align={{base: "center", md: "unset"}} flexDir="column" mr={{base: "0", md: "auto"}}>
+      <Flex w="full" maxW="90%" h="full" minH="5rem" 
+        ml={{base: "0", md: "10"}}  mr={{base: "0", md: "auto"}}
+        flexDir="column" justify="center" align={{base: "center", md: "unset"}}
+      >
         <Heading fontSize={{base: "lg", md: "2xl"}} fontWeight="bold">Welcome, {userData.name}</Heading>
         <Text fontSize={{base: "md", md: "lg"}}>What are you up to today?</Text>
       </Flex>
 
+      <Flex w="full" maxW="95%" h="full" minH="20rem" p="3" align="center" flexDir="column" mb="5">
+        <Heading fontSize={{base: "lg", md: "2xl"}} fontWeight="bold">Your statistics:</Heading>
+        <Wrap spacing="5" my="5" w="90%" justify="center">
+          <WrapItem _hover={{cursor: "pointer", transform: "scale(1.05, 1.05)"}} flexDir="column" alignItems="center">
+            <Flex bg="black" w={{base: "8rem", md: "12rem"}} h={{base: "8rem", md: "12rem"}}></Flex>
+            <Text variant="helperText">Your progress</Text>
+          </WrapItem>
+          <WrapItem _hover={{cursor: "pointer", transform: "scale(1.05, 1.05)"}} flexDir="column" alignItems="center">
+            <Flex bg="black" w={{base: "8rem", md: "12rem"}} h={{base: "8rem", md: "12rem"}}></Flex>
+            <Text variant="helperText">Your progress</Text>
+          </WrapItem>
+          <WrapItem _hover={{cursor: "pointer", transform: "scale(1.05, 1.05)"}} flexDir="column" alignItems="center">
+            <Flex bg="black" w={{base: "8rem", md: "12rem"}} h={{base: "8rem", md: "12rem"}}></Flex>
+            <Text variant="helperText">Your progress</Text>
+          </WrapItem>
+          <WrapItem _hover={{cursor: "pointer", transform: "scale(1.05, 1.05)"}} flexDir="column" alignItems="center">
+            <Flex bg="black" w={{base: "8rem", md: "12rem"}} h={{base: "8rem", md: "12rem"}}></Flex>
+            <Text variant="helperText">Your progress</Text>
+          </WrapItem>
+        </Wrap>
+      </Flex>
+
+      <Divider w="full" maxW="95%" borderY="1px solid #ADB5BD" my="5"/>
 
       <Flex w="auto" maxW="80%" h="auto" flexDir="column" justify="center">
         <Wrap spacing="0" alignItems="center" justify="center">
@@ -115,7 +140,7 @@ export default function Dashboard ({narrowScreen}) {
       </>
       }
 
-      <VStack w="100%"  h="auto" my="2">
+      <VStack w="100%" h="auto" my="2">
         <Heading fontSize="2xl">Recent notes:</Heading>
         <Wrap spacing="8" alignItems="center" justify="center">
           {noteData.map(note => {

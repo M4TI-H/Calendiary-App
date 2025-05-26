@@ -1,9 +1,9 @@
 import { VStack, HStack, Text, Image, Divider } from '@chakra-ui/react';
-import { BiSolidDashboard, BiListUl, BiNote, BiCalendar, BiBody, BiLogOut, BiCog, BiBookmarks } from "react-icons/bi";
+import { BiSolidDashboard, BiListUl, BiNote, BiCalendar, BiBody, BiLogOut, BiCog } from "react-icons/bi";
 import SidebarBtn from './SidebarBtn';
 import LogoutBtn from './LogoutBtn.jsx';
 
-export default function Sidebar({narrowScreen}) {
+export default function Sidebar() {
 
   return(
     <VStack maxW="14rem" maxH="54rem" w={{base: "10rem", lg: "100%"}} h="100%" align="flex-start" bg="#F8F9FA" borderLeftRadius="3xl">

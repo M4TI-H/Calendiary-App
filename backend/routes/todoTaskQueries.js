@@ -200,4 +200,31 @@ router.get("/fetch_todays_tasks", async (req, res) => {
   }
 });
 
+router.get("/fetch_task_count/:date", async (req, res) => {
+  try{
+    const authHeader  = req.headers["authorization"];
+    if (!authHeader ) {
+      return res.status(401).json({ status: "Access token missing." });
+    }
+    const accessToken = authHeader.split(' ')[1];
+    const decodedData = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+    const email = decodedData.email;
+
+    const date = new Date(req.params.date);
+    date.setHours(0, 0, 0, 0);
+    const formattedDate = date.toISOString().split("T")[0];
+
+    const [data] = await db.query("SELECT COUNT(todo_id) as count FROM user, todo_tasks WHERE id = user_id AND email = ? AND due_date = ?", [email, formattedDate]);
+
+    return res.status(200).json({
+      status: "Data has been fetched.",
+      counts: data[0].count
+    });
+  }
+  catch (err) {
+    console.error(`An error has occured while fetching data: ${err.message}`);
+    return res.status(500).json({ status: "Internal Server Error", error: err.message });
+  }
+});
+
 export default router;
