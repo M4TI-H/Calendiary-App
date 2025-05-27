@@ -57,7 +57,7 @@ export default function CompactCalendarPanel() {
 
   return (
     <HStack h="5rem" w="100%" align="center" top="0" spacing="0" justify="space-around"
-        bg="#F8F9FA" borderBottomRadius="xl" filter="auto" brightness="95%">
+        bg="#F8F9FA" borderBottomRadius="lg" filter="auto" brightness="95%">
 
         {dates.map((date, id) => (
             <VStack w="3rem" h="4rem" key={id} spacing="0" bg={formatDate(date) === formatDate(new Date()) && "red"} borderRadius="lg">
